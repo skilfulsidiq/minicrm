@@ -37,4 +37,13 @@ class CompanyRepository extends BaseRepository implements CompanyInterface{
     public function allCompanies(){
         return Company::paginate(5);
     }
+
+    /**
+     * company details
+     */
+     public function companyDetail($slug){
+         $company =  Company::where('slug', $slug)->firstOrFail();
+         return $company;
+
+     }
 }

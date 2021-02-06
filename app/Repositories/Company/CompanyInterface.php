@@ -5,5 +5,6 @@ interface CompanyInterface{
     public function addOrUpdateCompany($arr, $slug);
     public function deleteCompany($slug);
     public function allCompanies();
+    public function companyDetail($slug);
        
 }

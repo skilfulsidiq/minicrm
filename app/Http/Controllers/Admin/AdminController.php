@@ -31,5 +31,5 @@ class AdminController extends BaseController
         $data="welcome";
         return view('admin.dashboard',compact('data'));
     }
-
+    
 }
