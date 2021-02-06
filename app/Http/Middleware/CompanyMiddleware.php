@@ -20,7 +20,8 @@ class CompanyMiddleware
         if(!Auth::check()){
             return redirect()->route('login');
         } 
-        $user_role = Auth::user()->role;  
+        $user_role = Auth::user()->role->role;  
+        // dd($user_role);
         switch($user_role){
             case 'Admin':
                 return redirect()->route('dashboard');
@@ -29,5 +30,6 @@ class CompanyMiddleware
             case 'Employee':
                 return redirect()->route('employee');
         }
+        abort(404);
     }
 }

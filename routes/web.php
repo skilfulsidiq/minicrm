@@ -20,10 +20,11 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::group(['middleware'=>['auth','company']], function () {
-    Route::get('/home', 'HomeController@index')->name('home');
+Route::group(['namespace'=>'User','middleware'=>['auth','company']], function () {
+    Route::get('/home', 'UserController@companyUserPage')->name('company');
+    Route::get('/profile', 'UserController@companyUserProfile')->name('profile');
 });
-Route::group(['middleware'=>['auth','identify.user']], function () {
+Route::group(['namespace'=>'User','middleware'=>['auth','identify.user']], function () {
     Route::get('/employee', 'HomeController@index')->name('employee');
 });
 
@@ -33,7 +34,7 @@ Route::group(['prefix'=>'admin','namespace'=>'Admin'], function () {
     Route::post('/login', 'LoginController@login')->name('admin.login.post');
     Route::get('/logout', 'LoginController@logout')->name('admin.logout');
 
-    Route::group(['middleware' => ['auth:admin','admin']], function () {
+    Route::group(['middleware' => ['auth','admin']], function () {
         Route::get('/', 'AdminController@dashboard')->name('dashboard');
         //company
         Route::get('/companies', 'CompanyController@allCompanies')->name('admin.companies');

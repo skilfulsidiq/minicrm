@@ -20,17 +20,16 @@ class AdminMiddleware
          if(!Auth::check()){
             return redirect()->route('login');
         } 
-        $user_role = Auth::user()->role;  
+        $user_role = Auth::user()->role->role;  
         switch($user_role){
             case 'Admin':
                 return $next($request);
-               
             case 'Company':
-                 return redirect()->route('home');
+                 return redirect()->route('company');
             case 'Employee':
-                return redirect()->route('home');
+                return redirect()->route('employee');
         }
-
-        return $next($request);
+        abort(404);
+        // return $next($request);
     }
 }

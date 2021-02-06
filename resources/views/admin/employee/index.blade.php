@@ -21,8 +21,8 @@
                 <p class="text-muted font-13 mb-4">
                 </p>
 
-                <div class="table-responsive">
-                    <table id="datatable-buttons" class="table table-centered table-nowrap mb-0">
+                <div class="table-responsive pr-3">
+                    <table id="datatable1" class="table table-centered table-nowrap mb-0">
                         <thead class="thead-light">
                             <tr>
                                 <th> # </th>
@@ -40,7 +40,7 @@
                                 <td>{{$user->company->name??null}}</td>
                                 <td>{{$user->name??null}}</td>
                                 <td>{{$user->email??null}}</td>
-                                <td>{{$user->role->role??null}}</td>
+                                <td>{{$user->role->role??null}} User</td>
 
                                 <td>
                                     <a href="{{route('admin.employee_form',$user->slug)}}"  class="action-icon action-btn text-success"> <i class="fa fa-edit text-20"></i>
