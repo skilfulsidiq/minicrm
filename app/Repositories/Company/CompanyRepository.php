@@ -3,21 +3,30 @@ namespace App\Repositories\Company;
 
 use App\Models\Company;
 use App\Repositories\BaseRepository;
+use App\Traits\Uploadable;
 
 class CompanyRepository extends BaseRepository implements CompanyInterface{
     
-
+use Uploadable;
     /**
      * Add or Update Company
      * @param slug(optional)
      */
     public function addOrUpdateCompany($arr, $slug){
-        
-        $company = Company::updateOrCreate(['slug'=>$slug],$arr);
-        if(!$company){
-            return $this->fail('Cannot Add or Update Company','AddCompany');
+        $logo = $arr['image']!=null?$arr['image']:null;
+        try {
+            if($logo !=null){
+                $logo = $this->uploadOne($arr['image'],'companies');
+            }
+            $arr['logo']= $logo;
+             $company = Company::updateOrCreate(['slug'=>$slug],$arr);
+              return $this->success('Company updated successfully', $company);
+        } catch (\Exception $th) {
+            //throw $th;
+               return $this->fail('Cannot Add or Update Company','AddCompany',$th);
         }
-        return $this->success('Company updated successfully', $company);
+    
+       
     }
     /**
      * delte Company
