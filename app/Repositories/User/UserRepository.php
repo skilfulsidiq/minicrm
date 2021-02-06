@@ -36,19 +36,20 @@ class UserRepository extends BaseRepository implements UserInterface{
      * @param $company_id
      */
     public function companyUsers($company_id){
-        $users = User::where('company_id', $company_id)->get();
+        $users = User::where('company_id', $company_id)->orderBy('created_at','desc')->get();
         return $users;
     }
     /**
      * List of Companies
      */
     public function allUsers(){
-        return User::paginate(5);
+        return User::with('company','role')->notAdmin()->orderBy('created_at','desc')->get();
     }
-
-    /**
-     * User update their profile
-     * @param $slug
-     */
+    public function paginatedUsers(){
+        return User::with('company','role')->notAdmin()->orderBy('created_at','desc')->paginate(5);
+    }
+    public function userDetail($slug){
+        return User::where('slug', $slug)->firstOrFail();
+    }
    
 }

@@ -53,10 +53,13 @@ use Uploadable;
      * List of Companies
      */
     public function allCompanies(){
-       return Company::all();
+       return Company::orderBy('created_at','desc')->all();
+    }
+    public function allCompaniesNameOnly(){
+         return Company::pluck('id','name');
     }
     public function paginatedCompanies(){
-         return Company::paginate(5);
+         return Company::orderBy('created_at','desc')->paginate(5);
     }
 
     /**

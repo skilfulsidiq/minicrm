@@ -7,5 +7,7 @@ interface UserInterface{
     public function deleteUser($slug);
     public function companyUsers($company_id);
     public function allUsers();
+    public function paginatedUsers();
+    public function userDetail($slug);
     
 }

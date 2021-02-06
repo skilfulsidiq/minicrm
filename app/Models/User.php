@@ -59,4 +59,8 @@ class User extends Authenticatable
     public function company(){
         return $this->belongsTo(Company::class,'company_id')->withDefault();
     }
+
+    public function scopeNotAdmin($query){
+        return $query->where('company_id','!=',0);
+    }
 }
