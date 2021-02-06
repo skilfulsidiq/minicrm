@@ -41,8 +41,8 @@
     <!-- Begin page -->
 </div>
 
-    @include('admin_template.script')
-    @include('admin_template.notify')
+    @include('admin.template.script')
+    @include('admin.template.notify')
     @stack('custom_script')
 
 

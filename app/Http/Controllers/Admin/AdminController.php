@@ -28,7 +28,7 @@ class AdminController extends BaseController
     }
     public function dashboard(){
         $this->setPageTitle('Dashboard', 'Analytic');
-       
+        $data="welcome";
         return view('admin.dashboard',compact('data'));
     }
 

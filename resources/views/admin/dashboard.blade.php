@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('title',$pageTitle)
 @section('content')
-@include('admin_template.breadcrum',['title'=>$pageTitle])
+@include('admin.template.breadcrum',['title'=>$pageTitle])
 
 
 @endsection
