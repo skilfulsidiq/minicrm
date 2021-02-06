@@ -9,7 +9,7 @@
             <h2 class="signin-title-primary">Welcome back!</h2>
             <h3 class="signin-title-secondary">Sign in to continue.</h3>
             <form class="login-form" action="{{ route('login') }}" method="POST" role="form">
-                {{ csrf_field() }}
+               @csrf
                 <div class="form-group">
                     <input class="form-control  @error('email') has-danger @enderror" type="email" id="email" name="email" placeholder="Email address" autofocus value="{{ old('email') }}" required>
                     @error('email')

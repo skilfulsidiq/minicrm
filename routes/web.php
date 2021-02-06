@@ -40,6 +40,11 @@ Route::group(['prefix'=>'admin','namespace'=>'Admin'], function () {
         Route::get('/company-form/{slug?}', 'CompanyController@showCompanyForm')->name('admin.company_form');
         Route::post('/update-company/{slug?}', 'CompanyController@storeOrUpdateCompany')->name('admin.add_company');
         Route::get('/delete-company/{slug}', 'CompanyController@removeCompany')->name('admin.delete_company');
+        //employee
+        Route::get('/employees', 'EmployeeController@allEmployee')->name('admin.employee');
+        Route::get('/employee-form/{slug?}', 'EmployeeController@showEmployeeForm')->name('admin.employee_form');
+        Route::post('/update-employee/{slug?}', 'EmployeeController@storeOrUpdateEmployee')->name('admin.add_employee');
+        Route::get('/delete-employee/{slug}', 'EmployeeController@removeEmployee')->name('admin.delete_employee');
 
 
 

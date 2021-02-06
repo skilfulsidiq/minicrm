@@ -1,5 +1,5 @@
 <?php 
-namespace App\Repositories\Company;
+namespace App\Repositories\User;
 
 use App\Models\User;
 use App\Repositories\BaseRepository;
@@ -25,7 +25,7 @@ class UserRepository extends BaseRepository implements UserInterface{
      */
     public function deleteUser($slug){
          $user = User::where('slug', $slug)->first();
-        if(!$user->delete()){
+        if($user->delete()){
             return $this->success('User deleted successfully', $user);
         }
         return $this->fail('Error deleting user','DeleteUser');
