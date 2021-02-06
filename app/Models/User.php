@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 class User extends Authenticatable
@@ -47,6 +48,9 @@ class User extends Authenticatable
     public function setNameAttribute($value){
         $this->attributes['name']= $value;
         $this->attributes['slug']= Str::slug($value);
+    }
+    public function setPasswordAttribute($value){
+        $this->attributes['password']= Hash::make($value);
     }
 
     public function role(){
