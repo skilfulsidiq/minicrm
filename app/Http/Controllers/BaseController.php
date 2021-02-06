@@ -83,4 +83,10 @@ class BaseController extends Controller
 
         return response()->json($response, $code);
     }
+     public function returnStatus($feedback,$msg='Error'){
+         if(!$feedback['status']){
+            return $this->sendError($msg,[$feedback['msg']]);
+        }
+        return $this->sendSuccess($feedback['data'],$feedback['msg']);
+    }
 }
