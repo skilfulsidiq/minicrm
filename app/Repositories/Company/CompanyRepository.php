@@ -13,13 +13,22 @@ use Uploadable;
      * @param slug(optional)
      */
     public function addOrUpdateCompany($arr, $slug){
+       
         $logo = $arr['image']!=null?$arr['image']:null;
+       
         try {
             if($logo !=null){
                 $logo = $this->uploadOne($arr['image'],'companies');
+                 $arr['logo']= $logo;
+                 $r = $this->deleteFile($arr['formal_img']);
+                //  dd($r);
+            }else{
+               unset($arr['image']);
+                
             }
-            $arr['logo']= $logo;
+           
              $company = Company::updateOrCreate(['slug'=>$slug],$arr);
+            
               return $this->success('Company updated successfully', $company);
         } catch (\Exception $th) {
             //throw $th;
@@ -44,7 +53,10 @@ use Uploadable;
      * List of Companies
      */
     public function allCompanies(){
-        return Company::paginate(5);
+       return Company::all();
+    }
+    public function paginatedCompanies(){
+         return Company::paginate(5);
     }
 
     /**

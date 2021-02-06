@@ -35,6 +35,11 @@ Route::group(['prefix'=>'admin','namespace'=>'Admin'], function () {
 
     Route::group(['middleware' => ['auth:admin','admin']], function () {
         Route::get('/', 'AdminController@dashboard')->name('dashboard');
+        //company
+        Route::get('/companies', 'CompanyController@allCompanies')->name('admin.companies');
+        Route::get('/company-form/{slug?}', 'CompanyController@showCompanyForm')->name('admin.company_form');
+        Route::post('/update-company/{slug?}', 'CompanyController@storeOrUpdateCompany')->name('admin.add_company');
+        Route::get('/delete-company/{slug}', 'CompanyController@removeCompany')->name('admin.delete_company');
 
 
 

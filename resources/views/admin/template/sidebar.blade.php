@@ -7,9 +7,9 @@
         </li>
     {{-- </ul> --}}
     <label class="sidebar-label mt-3">Companies</label>
-        {{-- <li class="sidebar-nav-item">
-            <a href="{{route('admin.officers')}}" class="sidebar-nav-link {{setSingleActive('admin.officers')}}"><i class="icon ion-ios-people-outline"></i>&nbsp;&nbsp;Registered Officer</a>
-        </li> --}}
+        <li class="sidebar-nav-item">
+            <a href="{{route('admin.companies')}}" class="sidebar-nav-link {{setSingleActive('admin.companies')}}"><i class="icon ion-ios-people-outline"></i>&nbsp;&nbsp;All Companies</a>
+        </li>
     </ul>
     <label class="sidebar-label mt-3">Employees</label>
         

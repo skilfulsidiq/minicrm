@@ -17,6 +17,11 @@
     display:flex;
     justify-content: center;
 }
+
+/* edit$delete btn */
+.action-btn{
+    font-size:20px;
+}
 .icon-round{
     width:60px;
     height: 60px;
@@ -60,47 +65,4 @@
     box-shadow: 2px 6px 15px 0 rgba(69,65,78,.1);
 }
 /********DASHBARD***********/
-.card-sales{
-    min-height: 380px;
 
-}
-.card-sales .row .col p {
-    font-size:1.5em;
-}
-
-.sidebar-nav-link {
-    border-bottom: 0px solid #dee2e6;
-}
-.sidebar-nav-item:first-child .sidebar-nav-link {
-    border-top: 0px solid #dee2e6;
-}
-/************************
-***Officer DEtail page
-*****/
-.apstatus-section {
-    background-color: #fff;
-    border-radius: 6px;
-    padding: 6px 0px 25px 0px;
-}
-.applctnheader {
-    display: flex;
-    padding: 10px 56px 0px 19px;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 17px;
-}
-.udashboadprimheader {
-    color:var(--primary-color);
-    font-weight: 700;
-    font-size: 18px;
-}
-.view-detail-btn {
-    color: #1359f2;
-    background-color: rgba(3, 50, 154, 0.1);
-    font-weight: 700;
-    font-size: 13px;
-    border-radius: 6px;
-    padding: 8px 17px;
-    cursor: pointer;
-    border-color: transparent;
-}

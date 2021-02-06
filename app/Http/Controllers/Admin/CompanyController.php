@@ -14,6 +14,11 @@ class CompanyController extends BaseController
     {
         $this->company= $company;
     }
+    public function allCompanies(){
+         $this->setPageTitle('Company', 'All Companies');
+         $companies = $this->company->allCompanies();
+         return view('admin.company.index',compact('companies'));
+    }
 
     public function showCompanyForm($slug=null){
         $edit = false;
@@ -22,11 +27,32 @@ class CompanyController extends BaseController
             $edit = true;
             $company = $this->company->companyDetail($slug);
         }
-        $this->setPageTitle('Company', $edit?'Update Company':'Create Company');
+        $this->setPageTitle('Companies', $edit?'Update Company':'Create Company');
         return view('admin.company.form',compact('edit','company'));
 
     }
-    public function addOrUpdateCompany(Request $request, $slug=null){
-        $this->validate($request,['name','email','url','logo']);
+    public function storeOrUpdateCompany(Request $request, $slug=null){
+        $this->validate($request,['name'=>'required','email'=>'required|email','url'=>'required',
+        ]);
+       $image = null;
+        if($request->hasFile('image')){
+            $this->validate($request,[ 'image'=>'mimes:jpg,jpeg,png|max:1000']);
+            $image = $request->file('image');
+        }
+        $incomeingData = $request->only(['name','email','url','formal_img']);
+        $incomeingData['image']=$image;
+        $feedback = $this->company->addOrUpdateCompany($incomeingData, $slug);
+         if (!$feedback['status']) {
+            return $this->responseRedirectBack('Error while updating company','error',true,true);
+        }
+        return $this->responseRedirect('admin.companies', 'Company updated successfully' ,'success',false, false);
+
+    }
+    public function removeCompany($slug){
+        $feedback = $this->company->deleteCompany($slug);
+         if (!$feedback['status']) {
+            return $this->responseRedirectBack('Error while deleting company','error',true,true);
+        }
+        return $this->responseRedirect('admin.companies', 'Company deleted successfully' ,'success',false, false);
     }
 }
