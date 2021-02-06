@@ -14,7 +14,6 @@ class UserController extends BaseController
      public function __construct(UserInterface $employee)
     {
         $this->middleware('auth');
-        $this->middleware('company');
         $this->employee = $employee;
     }
 
@@ -23,6 +22,8 @@ class UserController extends BaseController
         return view('users.home',compact('employees'));
     }
     public function companyUserProfile(){
-        
+        $user = Auth::user();
+        $company=$user->company;
+        return view('users.profile',compact('user','company'));
     }
 }

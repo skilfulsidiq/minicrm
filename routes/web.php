@@ -22,10 +22,10 @@ Auth::routes();
 
 Route::group(['namespace'=>'User','middleware'=>['auth','company']], function () {
     Route::get('/home', 'UserController@companyUserPage')->name('company');
-    Route::get('/profile', 'UserController@companyUserProfile')->name('profile');
 });
-Route::group(['namespace'=>'User','middleware'=>['auth','identify.user']], function () {
+Route::group(['namespace'=>'User','middleware'=>['auth']], function () {
     Route::get('/employee', 'HomeController@index')->name('employee');
+       Route::get('/profile', 'UserController@companyUserProfile')->name('profile');
 });
 
 
