@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,6 +22,17 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Auth::routes();
+Route::group(['prefix'=>'admin','namespace'=>'Admin'], function () {
+    Route::get('/login', 'LoginController@showLoginForm')->name('admin.login');
+    Route::post('/login', 'LoginController@login')->name('admin.login.post');
+    Route::get('/logout', 'LoginController@logout')->name('admin.logout');
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::group(['middleware' => ['auth:admin']], function () {
+        Route::get('/', 'AdminController@dashboard')->name('dashboard');
+
+
+
+
+    });
+});
+
