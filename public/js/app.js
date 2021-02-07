@@ -38466,7 +38466,7 @@ var render = function() {
       _vm._l(_vm.pageOfItems, function(item) {
         return _c(
           "div",
-          { key: item.id, staticClass: "col-md-4 mt-5" },
+          { key: item.id, staticClass: "col-md-3 mt-5" },
           [_c("company-card", { attrs: { company: item } })],
           1
         )
