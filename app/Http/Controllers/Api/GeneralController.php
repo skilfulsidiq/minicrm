@@ -21,7 +21,10 @@ class GeneralController extends BaseController
         if ($validator->fails()) {
             return $this->sendError('Validation Error',[ $validator->errors()],403);
         }
-        $incomingData = $request->only(['name','email','password']);
+         $incomingData = $request->only(['name','email']);
+        if($request['password'] != null){
+            $incomingData['password'] = $request['password'];
+        }
         $feedback = $this->employee->addOrUpdateUser($incomingData,$slug);
         if(!$feedback['status']){
             return $this->sendError('profile update failed',$feedback['msg']);

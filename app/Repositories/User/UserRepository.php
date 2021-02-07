@@ -12,7 +12,7 @@ class UserRepository extends BaseRepository implements UserInterface{
      * @param $slug(optional)
      */
     public function addOrUpdateUser($arr, $slug){
-        
+        // return $arr;
         $user = User::updateOrCreate(['slug'=>$slug],$arr);
         if(!$user){
             return $this->fail('Cannot Add or Update user','AddUser');
