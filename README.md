@@ -2,8 +2,16 @@
 
 ## Set Up Instruction
 
-    <p><code>git clone https://github.com/skilfulsidiq/minicrm.git</code></p>
-    <p><code>cd minicrm</code></p>
+    Run `git clone https://github.com/skilfulsidiq/minicrm.git`
+
+    then `cd minicrm`
+
+    Rename `.env.example` to `.env`
+
+    Run `composer install` to install all laravel dependencies
+    Run `php artisan key:generate` to have the `APP_KEY` in `.env` file
+
+    Create a database and change the DB_DATABASE, DB_HOST, DB_USERNAME and DB_PASSWORD in the `.env` files according to your created database setting
 
 - [Simple, fast routing engine](https://laravel.com/docs/routing).
 - [Powerful dependency injection container](https://laravel.com/docs/container).
