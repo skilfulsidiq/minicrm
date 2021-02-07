@@ -17,7 +17,7 @@
             </div><!-- card -->
             </a>
             </div>
-          </div><!-- col-3 -->
+          <!-- col-3 -->
           <div class="col-sm-6 col-md-6 mg-t-10 mg-sm-t-0">
                <a href="{{route('admin.employee')}}">
                 <div class="card card-status">
@@ -32,7 +32,7 @@
                </a>
           </div><!-- col-3 -->
          <!-- col-3 -->
-        </div>
+    </div>
 @endsection
 @push('custom_script')
 @endpush
