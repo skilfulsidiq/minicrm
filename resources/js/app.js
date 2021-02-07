@@ -8,6 +8,7 @@ require('./bootstrap');
 
 window.Vue = require('vue').default;
 import VueSwal from 'vue-swal'
+import JwPagination from 'jw-vue-pagination';
 
 Vue.use(VueSwal)
 
@@ -25,8 +26,10 @@ Vue.use(VueSwal)
 // Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('employee-table', require('./components/EmployeeTable.vue').default);
 Vue.component('profile-component', require('./components/ProfileComponent.vue').default);
+Vue.component('profile-component', require('./components/ProfileComponent.vue').default);
+Vue.component('company-list', require('./components/CompanyList.vue').default);
 Vue.component('company-card', require('./components/CompanyCard.vue').default);
-
+Vue.component('jw-pagination', JwPagination);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

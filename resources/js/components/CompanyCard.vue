@@ -5,13 +5,21 @@
             <h4>{{company.name}}</h4>
         <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
     </div>
+    
     </div>
-  
+   
 </template>
 <script>
 export default {
     name:'CompanyCard',
-    props:{company:Object}
+    props:{company:Object},
+       data() {
+        return {
+        };
+    },
+    methods: {
+       
+    }
 }
 </script>
 <style scoped>

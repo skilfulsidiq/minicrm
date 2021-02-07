@@ -60,8 +60,13 @@ use Uploadable;
          return Company::get(['id','name']);
     }
     public function paginatedCompanies(){
-        $companies = DB::table('companies')->selectRaw('count(users.id)')
-         return Company::orderBy('created_at','desc')->withCount('user')->paginate(1);
+        // $companies = DB::table('companies')->select(DB::raw('count(users.id) as user_count,companies.name','companies.email'))
+        // ->leftJoin('users','users.company_id','=','companies.id')
+        // ->groupBy('companies.name')
+        // ->where('users.company_id', '!=',0)
+        // ->paginate(1);
+         return Company::orderBy('created_at','desc')->get();
+        // return $companies;
     }
 
     /**

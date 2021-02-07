@@ -14,7 +14,7 @@ class GeneralController extends Controller
     }
     public function welcomePage(){
         $companies = $this->company->paginatedCompanies();
-        dd($companies);
+        // dd($companies);
         return view('welcome',compact('companies'));
     }
 }
