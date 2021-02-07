@@ -2,6 +2,6 @@
 
 @section('content')
 <div class="container">
-   <profile-component ></profile-component>
+   <profile-component :profile="{{$user}}" :company="{{$company}}"></profile-component>
 </div>
 @endsection

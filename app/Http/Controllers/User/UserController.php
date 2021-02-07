@@ -26,4 +26,5 @@ class UserController extends BaseController
         $company=$user->company;
         return view('users.profile',compact('user','company'));
     }
+    
 }
