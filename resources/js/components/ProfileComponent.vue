@@ -32,7 +32,7 @@
                           <input type="password" v-model="form.password" class="form-control">
                         </div>
                         <div class="form-group">
-                        <button class="btn btn-primary btn-block">Update Profile</button>
+                        <button class="btn btn-primary btn-block"><span v-if="!isLoading">Update Profile</span> <span v-if="isLoading">Updating....</span></button>
                         </div>
                       </form>
                   </div>
@@ -54,12 +54,13 @@
 </template>
 <script>
 import axios from 'axios';
-const URL="";
+const URL="http://minicrm.loc/api/update-profile/";
 export default {
     name:'ProfileComponent',
-    props:{profile:Object,company:Object},
+    props:{user:Object,company:Object},
     data(){
       return{
+        isLoading:false,
         form:{
           name:'',
           email:'',
@@ -68,24 +69,44 @@ export default {
         }
       }
     },
+    computed:{
+      profile:{
+        get:function(){
+          return this.user;
+        },
+        set:function(val){
+          this.user = val;
+        }
+      }
+    },
     methods:{
       updateProfile(){
         if(this.form.name !='' &&  this.form.email !=''){
+          this.isLoading = true;
             console.log(this.form);
-            axios.post(URl,this.form).then((res)=>{
-
+            axios.post(URL+this.form.slug,this.form).then((res)=>{
+              this.isLoading=false;
+              let data = res.data.data;
+                console.log(res.data.data);
+                this.profile =data
+                this.updateForm(data);
+                 this.$swal('Success','Profile Updated successfully','success')
             }).catch((err)=>{
-              
+               this.isLoading=false;
+              console.log(err)
             })
         }
         return;
       
+      },
+      updateForm(data){
+         this.form.name = data.name
+        this.form.email = data.email
+        this.form.slug = data.slug
       }
     },
     created(){
-        this.form.name = this.profile.name
-        this.form.email = this.profile.email
-        this.form.slug = this.profile.slug
+        this.updateForm(this.user)
     }
 }
 </script>
