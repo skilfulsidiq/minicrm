@@ -5,6 +5,7 @@
 <script src="{{asset('css/toastr/toastr.js')}}"></script>
 <script src="{{asset('assets/lib/datatables/js/jquery.dataTables.js')}}"></script>
 <script src="{{asset('assets/lib/datatables-responsive/js/dataTables.responsive.js')}}"></script>
+<script src="{{asset('assets/js/slim.js')}}"></script>
    
 
 {{-- <script src="{{asset('assets/js/ResizeSensor.js')}}"></script> --}}
