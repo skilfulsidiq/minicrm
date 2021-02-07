@@ -114,4 +114,8 @@ export default {
   .show-line{
     border-left: 1px solid #f2f2f2;
   }
+  .card-profile img {
+    border-radius: 0;
+    width:200px;
+  }
 </style>

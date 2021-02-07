@@ -4,6 +4,7 @@ namespace App\Repositories\Company;
 use App\Models\Company;
 use App\Repositories\BaseRepository;
 use App\Traits\Uploadable;
+use Illuminate\Support\Facades\DB;
 
 class CompanyRepository extends BaseRepository implements CompanyInterface{
     
@@ -59,7 +60,8 @@ use Uploadable;
          return Company::get(['id','name']);
     }
     public function paginatedCompanies(){
-         return Company::orderBy('created_at','desc')->paginate(5);
+        $companies = DB::table('companies')->selectRaw('count(users.id)')
+         return Company::orderBy('created_at','desc')->withCount('user')->paginate(1);
     }
 
     /**

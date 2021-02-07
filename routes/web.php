@@ -14,9 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'GeneralController@welcomePage')->name('welcome');
 
 Auth::routes();
 
@@ -24,7 +22,7 @@ Route::group(['namespace'=>'User','middleware'=>['auth','company']], function ()
     Route::get('/home', 'UserController@companyUserPage')->name('company');
 });
 Route::group(['namespace'=>'User','middleware'=>['auth']], function () {
-    Route::get('/employee', 'HomeController@index')->name('employee');
+    Route::get('/employee', 'EmployeeController@employeePage')->name('employee');
        Route::get('/profile', 'UserController@companyUserProfile')->name('profile');
 });
 
