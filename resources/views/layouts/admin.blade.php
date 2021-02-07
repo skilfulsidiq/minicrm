@@ -12,9 +12,6 @@
      <link href="{{asset('assets/lib/Ionicons/css/ionicons.css')}}" rel="stylesheet">
      <link href="{{asset('assets/lib/datatables/css/jquery.dataTables.css')}}" rel="stylesheet">
      <link href="{{asset('assets/lib/select2/css/select2.min.css')}}" rel="stylesheet">
-     {{-- <link href="{{asset('assets/lib/chartist/css/chartist.css')}}" rel="stylesheet"> --}}
-     {{-- <link href="{{asset('assets/lib/rickshaw/css/rickshaw.min.css')}}" rel="stylesheet"> --}}
-     <link href="{{asset('assets/lib/perfect-scrollbar/css/perfect-scrollbar.min.css')}}" rel="stylesheet">
 
      <!-- Slim CSS -->
      <link rel="stylesheet" href="{{asset('css/app.css')}}">
