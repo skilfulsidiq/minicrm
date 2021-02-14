@@ -19,7 +19,7 @@
       <link href="{{asset('assets/lib/Ionicons/css/ionicons.css')}}" rel="stylesheet">
 
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ mix('css/app.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('css/parsley.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{asset('assets/css/slim.min.css')}}">
     <link rel="stylesheet" href="{{asset('assets/css/mycss.css')}}">
@@ -87,7 +87,7 @@
             @yield('content')
         </main>
     </div>
-
+    <script src="{{ mix('js/app.js') }}"></script>
     <script src="{{ asset('js/app.js') }}" ></script>
     <script src="{{ asset('js/parsley.min.js') }}" ></script>
     @stack('custom_script')
