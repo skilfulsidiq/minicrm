@@ -49,30 +49,45 @@ const actions = {
     addCompanyAction({commit},formdata) {
         let form = formdata.form;
         let slug = formdata.slug;
+         return new Promise((resolve, reject) => {
             api.addCompany(form, slug).then(res => {
                 const p = res.data.data;
+                resolve(res);
                 // commit("ALL_EMPLOYEES", p);
             })
+        });
     },
     deleteCompanyAction({  commit }, slug) {
+             return new Promise((resolve, reject) => {
             api.deleteCompany(slug).then(res => {
                 const p = res.data.data;
+                resolve(res);
                 // commit("ALL_EMPLOYEES", p);
             })
+        })
     },
     addEmployeeAction({ commit}, formdata) {
               let form = formdata.form;
               let slug = formdata.slug;
-              api.addEmployee(form, slug).then(res => {
-                  const p = res.data.data;
-                  // commit("ALL_EMPLOYEES", p);
+              return new Promise((resolve,reject)=>{
+                      api.addEmployee(form, slug).then(res => {
+                          const p = res.data.data;
+                          resolve(res);
+                          // commit("ALL_EMPLOYEES", p);
+                      }).catch((err)=>{
+                          reject(err);
+                      })
               })
+            
     },
     deleteEmployeeAction({ commit}, slug) {
+         return new Promise((resolve, reject) => {
               api.deleteCompany(slug).then(res => {
                   const p = res.data.data;
+                  resolve(res);
                   // commit("ALL_EMPLOYEES", p);
               })
+            });
           }
 
     

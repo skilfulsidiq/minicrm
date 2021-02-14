@@ -126,6 +126,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -141,7 +155,8 @@ __webpack_require__.r(__webpack_exports__);
         email: '',
         password: ''
       },
-      submitted: false
+      submitted: false,
+      editForm: false
     };
   },
   validations: {
@@ -179,17 +194,56 @@ __webpack_require__.r(__webpack_exports__);
     fetchInfo: function fetchInfo() {
       this.$store.dispatch('dashboardAllEmployeeAction');
     },
-    fetchCompanyInfo: function fetchCompanyInfo() {
+    fetchDataInfo: function fetchDataInfo() {
       this.$store.dispatch('allCompaniesAction');
+      this.$store.dispatch('allRoleAction');
+    },
+    mapDataToForm: function mapDataToForm(user) {
+      this.form.company_id = user.company_id;
+      this.form.role_id = user.role_id;
+      this.form.name = user.name, this.form.email = user.email;
     },
     openModal: function openModal() {
       this.form = {};
       $("#newModal").modal('show');
+    },
+    closeModal: function closeModal() {
+      this.editForm = false;
+      this.resetForm();
+      $("#newModal").modal('hide');
+    },
+    editModal: function editModal(user) {
+      this.resetForm();
+      this.mapDataToForm(user);
+      this.editForm = true;
+      $("#newModal").modal('show');
+    },
+    resetForm: function resetForm() {
+      this.form = {};
+    },
+    addEmployee: function addEmployee() {
+      var _this = this;
+
+      this.submitted = true; // stop here if form is invalid
+
+      this.$v.$touch();
+
+      if (this.$v.$invalid) {
+        return;
+      }
+
+      this.$store.dispatch("addEmployeeAction", this.form).then(function (res) {
+        _this.closeModal();
+
+        _this.resetForm();
+
+        _this.submitted = false;
+      });
     }
   },
   created: function created() {
     this.fetchInfo();
-    this.fetchCompanyInfo();
+    this.fetchDataInfo();
   }
 });
 
@@ -326,7 +380,24 @@ var render = function() {
                       _vm._v(" "),
                       _c("td", [_vm._v(_vm._s(user.role.role) + " User")]),
                       _vm._v(" "),
-                      _vm._m(1, true)
+                      _c("td", [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "text-success btn-text",
+                            on: {
+                              click: function($event) {
+                                return _vm.editModal(user)
+                              }
+                            }
+                          },
+                          [_c("i", { staticClass: "fa fa-edit text-20" })]
+                        ),
+                        _vm._v(
+                          "\n                         \n                        "
+                        ),
+                        _vm._m(1, true)
+                      ])
                     ])
                   }),
                   0
@@ -375,21 +446,42 @@ var render = function() {
             },
             [
               _c("div", { staticClass: "modal-content" }, [
-                _vm._m(2),
-                _vm._v(" "),
-                _c("div", { staticClass: "modal-body" }, [
+                _c("div", { staticClass: "modal-header" }, [
                   _c(
-                    "form",
+                    "h5",
                     {
-                      on: {
-                        submit: function($event) {
-                          $event.preventDefault()
-                          return _vm.add($event)
-                        }
-                      }
+                      staticClass: "modal-title",
+                      attrs: { id: "employeeModalLongTitle" }
                     },
                     [
+                      _vm._v(
+                        _vm._s(
+                          _vm.editForm ? "Update Employee" : "Add Employee"
+                        )
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _vm._m(2)
+                ]),
+                _vm._v(" "),
+                _c(
+                  "form",
+                  {
+                    on: {
+                      submit: function($event) {
+                        $event.preventDefault()
+                        return _vm.addEmployee($event)
+                      }
+                    }
+                  },
+                  [
+                    _c("div", { staticClass: "modal-body" }, [
                       _c("div", { staticClass: "form-group" }, [
+                        _c("label", { attrs: { for: "" } }, [
+                          _vm._v("Company")
+                        ]),
+                        _vm._v(" "),
                         _c(
                           "select",
                           {
@@ -447,6 +539,8 @@ var render = function() {
                       ]),
                       _vm._v(" "),
                       _c("div", { staticClass: "form-group" }, [
+                        _c("label", { attrs: { for: "" } }, [_vm._v("ROle")]),
+                        _vm._v(" "),
                         _c(
                           "select",
                           {
@@ -504,6 +598,8 @@ var render = function() {
                       ]),
                       _vm._v(" "),
                       _c("div", { staticClass: "form-group" }, [
+                        _c("label", { attrs: { for: "" } }, [_vm._v("Name")]),
+                        _vm._v(" "),
                         _c("input", {
                           directives: [
                             {
@@ -519,11 +615,7 @@ var render = function() {
                             "is-invalid":
                               _vm.submitted && _vm.$v.form.name.$error
                           },
-                          attrs: {
-                            type: "text",
-                            placeholder: "name",
-                            autofocus: ""
-                          },
+                          attrs: { type: "text", autofocus: "" },
                           domProps: { value: _vm.form.name },
                           on: {
                             input: function($event) {
@@ -545,17 +637,15 @@ var render = function() {
                         _vm.submitted && _vm.$v.form.name.$error
                           ? _c("div", { staticClass: "invalid-feedback" }, [
                               !_vm.$v.form.name.required
-                                ? _c("span", [_vm._v("Email is required")])
-                                : _vm._e(),
-                              _vm._v(" "),
-                              !_vm.$v.form.name.email
-                                ? _c("span", [_vm._v("Email is invalid")])
+                                ? _c("span", [_vm._v("Name is required")])
                                 : _vm._e()
                             ])
                           : _vm._e()
                       ]),
                       _vm._v(" "),
                       _c("div", { staticClass: "form-group" }, [
+                        _c("label", { attrs: { for: "" } }, [_vm._v("Email")]),
+                        _vm._v(" "),
                         _c("input", {
                           directives: [
                             {
@@ -571,12 +661,7 @@ var render = function() {
                             "is-invalid":
                               _vm.submitted && _vm.$v.form.email.$error
                           },
-                          attrs: {
-                            type: "email",
-                            id: "email",
-                            placeholder: "Email address",
-                            autofocus: ""
-                          },
+                          attrs: { type: "email", id: "email", autofocus: "" },
                           domProps: { value: _vm.form.email },
                           on: {
                             input: function($event) {
@@ -606,12 +691,70 @@ var render = function() {
                                 : _vm._e()
                             ])
                           : _vm._e()
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "form-group" }, [
+                        _c("label", { attrs: { for: "" } }, [
+                          _vm._v("Password")
+                        ]),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model.trim",
+                              value: _vm.form.email,
+                              expression: "form.email",
+                              modifiers: { trim: true }
+                            }
+                          ],
+                          staticClass: "form-control",
+                          class: {
+                            "is-invalid":
+                              _vm.submitted && _vm.$v.form.password.$error
+                          },
+                          attrs: { type: "text", id: "email", autofocus: "" },
+                          domProps: { value: _vm.form.email },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.form,
+                                "email",
+                                $event.target.value.trim()
+                              )
+                            },
+                            blur: function($event) {
+                              return _vm.$forceUpdate()
+                            }
+                          }
+                        })
                       ])
-                    ]
-                  )
-                ]),
-                _vm._v(" "),
-                _vm._m(3)
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "modal-footer" }, [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-secondary",
+                          attrs: { type: "button", "data-dismiss": "modal" }
+                        },
+                        [_vm._v("Close")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-primary",
+                          attrs: { type: "submit" }
+                        },
+                        [_vm._v(_vm._s(_vm.editForm ? "Update" : "Add"))]
+                      )
+                    ])
+                  ]
+                )
               ])
             ]
           )
@@ -648,69 +791,34 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("td", [
-      _c("a", { staticClass: "text-success", attrs: { href: "#" } }, [
-        _c("i", { staticClass: "fa fa-edit text-20" })
-      ]),
-      _vm._v("\n                         \n                        "),
-      _c(
-        "a",
-        {
-          staticClass: " text-danger",
-          attrs: {
-            onclick: "return confirm('are you sure to delete');",
-            href: "#"
-          }
-        },
-        [_c("i", { staticClass: "fa fa-trash" })]
-      )
-    ])
+    return _c(
+      "a",
+      {
+        staticClass: " text-danger",
+        attrs: {
+          onclick: "return confirm('are you sure to delete');",
+          href: "#"
+        }
+      },
+      [_c("i", { staticClass: "fa fa-trash" })]
+    )
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-header" }, [
-      _c(
-        "h5",
-        { staticClass: "modal-title", attrs: { id: "employeeModalLongTitle" } },
-        [_vm._v("Modal title")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "close",
-          attrs: {
-            type: "button",
-            "data-dismiss": "modal",
-            "aria-label": "Close"
-          }
-        },
-        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-footer" }, [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-secondary",
-          attrs: { type: "button", "data-dismiss": "modal" }
-        },
-        [_vm._v("Close")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        { staticClass: "btn btn-primary", attrs: { type: "button" } },
-        [_vm._v("Save changes")]
-      )
-    ])
+    return _c(
+      "button",
+      {
+        staticClass: "close",
+        attrs: {
+          type: "button",
+          "data-dismiss": "modal",
+          "aria-label": "Close"
+        }
+      },
+      [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+    )
   }
 ]
 render._withStripped = true

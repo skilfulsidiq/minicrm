@@ -33,8 +33,8 @@
                         <td>{{user.role.role}} User</td>
 
                         <td>
-                            <a href="#"  class="text-success"> <i class="fa fa-edit text-20"></i>
-                            </a>
+                            <button  @click="editModal(user)"  class="text-success btn-text"> <i class="fa fa-edit text-20"></i>
+                            </button>
                             &nbsp;
                             <a onclick="return confirm('are you sure to delete');"  href="#" class=" text-danger"> <i class="fa fa-trash"></i></a>
                         </td>
@@ -57,14 +57,16 @@
             <div class="modal-dialog modal-dialog-centered" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="employeeModalLongTitle">Modal title</h5>
+                  <h5 class="modal-title" id="employeeModalLongTitle">{{editForm?'Update Employee':'Add Employee'}}</h5>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
+                 <form @submit.prevent="addEmployee">
                 <div class="modal-body">
-                      <form @submit.prevent="add">
+                     
                         <div class="form-group">
+                           <label for="">Company</label>
                               <select v-model="form.company_id" id=""
                               class="form-control" :class="{ 'is-invalid': submitted && $v.form.company_id.$error }">
                                 <option v-for="item in companies" :key="item.id" :value="item.id">{{item.name}}</option>
@@ -75,6 +77,7 @@
                     
                           </div>
                         <div class="form-group">
+                          <label for="">ROle</label>
                               <select v-model="form.role_id" id=""
                               class="form-control" :class="{ 'is-invalid': submitted && $v.form.role_id.$error }">
                                 <option v-for="item in roles" :key="item.id" :value="item.id">{{item.role}}</option>
@@ -85,27 +88,38 @@
                     
                           </div>
                           <div class="form-group">
-                              <input class="form-control" :class="{ 'is-invalid': submitted && $v.form.name.$error }" type="text" v-model.trim="form.name" placeholder="name" autofocus>
+                             <label for="">Name</label>
+                              <input class="form-control" :class="{ 'is-invalid': submitted && $v.form.name.$error }" type="text" v-model.trim="form.name" autofocus>
                                 <div v-if="submitted && $v.form.name.$error" class="invalid-feedback">
-                                  <span v-if="!$v.form.name.required">Email is required</span>
-                                  <span v-if="!$v.form.name.email">Email is invalid</span>
+                                  <span v-if="!$v.form.name.required">Name is required</span>
                               </div>
                     
                           </div>
                           <div class="form-group">
-                              <input class="form-control" :class="{ 'is-invalid': submitted && $v.form.email.$error }" type="email" id="email" v-model.trim="form.email" placeholder="Email address" autofocus>
+                             <label for="">Email</label>
+                              <input class="form-control" :class="{ 'is-invalid': submitted && $v.form.email.$error }" type="email" id="email" v-model.trim="form.email"  autofocus>
                                 <div v-if="submitted && $v.form.email.$error" class="invalid-feedback">
                                   <span v-if="!$v.form.email.required">Email is required</span>
                                   <span v-if="!$v.form.email.email">Email is invalid</span>
                               </div>
                     
                           </div>
-                      </form>
+                           <div class="form-group">
+                             <label for="">Password</label>
+                              <input class="form-control" :class="{ 'is-invalid': submitted && $v.form.password.$error }" type="text" id="email" v-model.trim="form.email"  autofocus>
+                                <!-- <div v-if="submitted && $v.form.email.$error" class="invalid-feedback">
+                                  <span v-if="!$v.form.password.required">Password is required</span>
+                                  <span v-if="!$v.form.password.minLength">Password must be at least 6 characters</span>
+                              </div> -->
+                    
+                          </div>
+                     
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                  <button type="button" class="btn btn-primary">Save changes</button>
+                  <button type="submit" class="btn btn-primary">{{editForm?'Update':'Add'}}</button>
                 </div>
+                 </form>
               </div>
             </div>
           </div>
@@ -127,7 +141,8 @@ export default {
               email:'',
               password:''
             },
-            submitted:false
+            submitted:false,
+            editForm:false
         }
     },
     validations:{
@@ -135,7 +150,8 @@ export default {
         company_id:{required},
         role_id:{required},
         name:{required},
-        email:{required, email},
+        email:{required, email}
+        
 
       }
     },
@@ -157,17 +173,55 @@ export default {
         fetchInfo(){
           this.$store.dispatch('dashboardAllEmployeeAction');
         },
-        fetchCompanyInfo(){
+        fetchDataInfo(){
           this.$store.dispatch('allCompaniesAction');
+          this.$store.dispatch('allRoleAction');
+        },
+        mapDataToForm(user){
+          this.form.company_id = user.company_id
+          this.form.role_id = user.role_id
+          this.form.name = user.name,
+          this.form.email = user.email
         },
         openModal(){
           this.form={}
           $("#newModal").modal('show');
+        },
+        closeModal(){
+          this.editForm=false;
+          this.resetForm();
+            $("#newModal").modal('hide');
+             
+        },
+        editModal(user){
+          this.resetForm();
+          this.mapDataToForm(user);
+          this.editForm=true;
+        
+           $("#newModal").modal('show');
+        },
+        resetForm(){
+          this.form={}
+        },
+        addEmployee(){
+           this.submitted = true;
+
+                // stop here if form is invalid
+                this.$v.$touch();
+                if (this.$v.$invalid) {
+                    return;
+                }
+
+              this.$store.dispatch("addEmployeeAction",this.form).then((res)=>{
+                  this.closeModal();
+                  this.resetForm();
+                  this.submitted = false;
+              });
         }
     },
     created(){
       this.fetchInfo();
-      this.fetchCompanyInfo();
+      this.fetchDataInfo();
     }
 
     

@@ -4017,28 +4017,42 @@ var actions = {
     var commit = _ref4.commit;
     var form = formdata.form;
     var slug = formdata.slug;
-    api.addCompany(form, slug).then(function (res) {
-      var p = res.data.data; // commit("ALL_EMPLOYEES", p);
+    return new Promise(function (resolve, reject) {
+      api.addCompany(form, slug).then(function (res) {
+        var p = res.data.data;
+        resolve(res); // commit("ALL_EMPLOYEES", p);
+      });
     });
   },
   deleteCompanyAction: function deleteCompanyAction(_ref5, slug) {
     var commit = _ref5.commit;
-    api.deleteCompany(slug).then(function (res) {
-      var p = res.data.data; // commit("ALL_EMPLOYEES", p);
+    return new Promise(function (resolve, reject) {
+      api.deleteCompany(slug).then(function (res) {
+        var p = res.data.data;
+        resolve(res); // commit("ALL_EMPLOYEES", p);
+      });
     });
   },
   addEmployeeAction: function addEmployeeAction(_ref6, formdata) {
     var commit = _ref6.commit;
     var form = formdata.form;
     var slug = formdata.slug;
-    api.addEmployee(form, slug).then(function (res) {
-      var p = res.data.data; // commit("ALL_EMPLOYEES", p);
+    return new Promise(function (resolve, reject) {
+      api.addEmployee(form, slug).then(function (res) {
+        var p = res.data.data;
+        resolve(res); // commit("ALL_EMPLOYEES", p);
+      })["catch"](function (err) {
+        reject(err);
+      });
     });
   },
   deleteEmployeeAction: function deleteEmployeeAction(_ref7, slug) {
     var commit = _ref7.commit;
-    api.deleteCompany(slug).then(function (res) {
-      var p = res.data.data; // commit("ALL_EMPLOYEES", p);
+    return new Promise(function (resolve, reject) {
+      api.deleteCompany(slug).then(function (res) {
+        var p = res.data.data;
+        resolve(res); // commit("ALL_EMPLOYEES", p);
+      });
     });
   }
 };
