@@ -12,6 +12,7 @@ import Success from '../components/general/Success.vue'
 import NavList from '../components/general/NavList.vue'
 import JwPagination from 'jw-vue-pagination'
 import VueSwal from 'vue-swal'
+import Vuelidate from "vuelidate";
 
 
 
@@ -43,6 +44,8 @@ Vue.component('company-card', CompanyCard);
 
 // External Components
 Vue.use(VueSwal)
+Vue.use(Vuelidate);
+
 Vue.component('jw-pagination', JwPagination);
 
 
