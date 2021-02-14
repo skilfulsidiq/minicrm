@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\User;
+namespace App\Http\Controllers\Api\User;
 
 use App\Http\Controllers\BaseController;
 use App\Http\Controllers\Controller;
@@ -16,15 +16,15 @@ class UserController extends BaseController
         $this->middleware('auth');
         $this->employee = $employee;
     }
-
-    public function companyUserPage(){
+    
+    public function allCompanyEmployees(){
         $employees = $this->employee->companyUsers(Auth::user()->company_id);
-        return view('users.home',compact('employees'));
+        return $this->sendSuccess($employees,'All employye');
     }
-    public function companyUserProfile(){
-        $user = Auth::user();
-        $company=$user->company;
-        return view('users.profile',compact('user','company'));
-    }
+    // public function employee(){
+    //     $user = Auth::user();
+    //     $company=$user->company;
+    //     return view('users.profile',compact('user','company'));
+    // }
     
 }

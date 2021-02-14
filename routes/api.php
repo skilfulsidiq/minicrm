@@ -19,5 +19,13 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::group(['namespace'=>'Api'],function(){
+    Route::post('/login','AuthController@login');
+    Route::post('/forgot-password','AuthController@forgot_password');
+    Route::post('/change-password-code','AuthController@changePasswordUsingCode');
+
+    
+});
+Route::group(['namespace'=>'Api/User','middleware'=>['auth:sanctum']],function(){
+
     Route::post('/update-profile/{slug}','GeneralController@updateProfile');
 });
