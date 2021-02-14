@@ -8,6 +8,7 @@ import router from "./router";
 import ApiService from './services/ApiService';
 import { TokenService } from './services/TokenService';
 import store from "./store";
+
 // import vuetify from "./plugins/vuetify";
 ApiService.init('/api/');
 if (TokenService.getToken()) {

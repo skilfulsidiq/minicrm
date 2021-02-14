@@ -29,6 +29,5 @@
         <app></app>
     </div>
     <script src="{{ mix('js/app.js') }}"></script>
-    {{-- <script src="{{ asset('js/parsley.min.js') }}" ></script> --}}
 </body>
 </html>

@@ -14,7 +14,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({});
+//
+//
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: "Home",
+  computed: {
+    userData: function userData() {
+      var p = this.$store.state.authmodule.user;
+      return p;
+    }
+  }
+});
 
 /***/ }),
 
@@ -106,7 +116,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div")
+  return _c("div", [_vm._v("\n    " + _vm._s(_vm.userData.role.role) + "\n")])
 }
 var staticRenderFns = []
 render._withStripped = true

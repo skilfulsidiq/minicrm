@@ -5,6 +5,7 @@ import {
   TokenService
 } from '../services/TokenService'
 import EventBus from '../services/event'
+ import store from '../store'
 import backend_routes from './backend_routes'
 import Welcome from '../views/pages/frontend/Welcome'
 
@@ -77,35 +78,40 @@ const router = new VueRouter({
   }
 });
 
-// router.beforeResolve((to, from, next) => {
-//   if (to.name) {
-//     // NProgress.start();
-//     EventBus.$emit("loading", true)
-//   }
-//   next();
-// });
+router.beforeResolve((to, from, next) => {
+  if (to.name) {
+    // NProgress.start();
+    EventBus.$emit("loading", true)
+  }
+  next();
+});
 
-// router.afterEach((to, from) => {
-//   // NProgress.done();
-//   EventBus.$emit("loading", false)
-// });
-// router.beforeEach((to, from, next) => {
-//   const isPublic = to.matched.some(record => record.meta.public)
-//   const onlyWhenLoggedOut = to.matched.some(record => record.meta.onlylogout)
-//   let loggedIn = !!TokenService.getToken();
-//   if (!isPublic && !loggedIn && to.path !== '/login') {
-//       return next({
-//           path: '/login',
-//           // query: {
-//           //     redirect: to.fullPath
-//           // } // Store the full path to redirect the user to after login
-//       });
+router.afterEach((to, from) => {
+  // NProgress.done();
+  EventBus.$emit("loading", false)
+});
+router.beforeEach((to, from, next) => {
+  const isPublic = to.matched.some(record => record.meta.public)
+  const onlyWhenLoggedOut = to.matched.some(record => record.meta.onlylogout)
+  const role = store.state.authmodule.user.role;
+  let loggedIn = !!TokenService.getToken();
+  if (!isPublic && !loggedIn && to.path !== '/login') {
+      return next({
+          path: '/login',
+          // query: {
+          //     redirect: to.fullPath
+          // } // Store the full path to redirect the user to after login
+      });
 
-//   }
-//   if (loggedIn && onlyWhenLoggedOut) {
-//       return next('/home')
-//   }
-//   next();
-// });
+  }
+  if (loggedIn && onlyWhenLoggedOut) {
+      if(role != 'Admin'){
+          return next('/home')
+      }
+      return next('/dashboard')
+
+  }
+  next();
+});
 
 export default router

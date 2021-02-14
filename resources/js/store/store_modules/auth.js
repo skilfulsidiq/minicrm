@@ -1,7 +1,9 @@
 import { TokenService } from "../../services/TokenService";
 import UserService from "../../services/UserService";
 import router from "../../router/index"
-import {ApiSource} from "../../services/ApiService";
+import ApiService, {
+    ApiSource
+} from "../../services/ApiService";
 const api = new ApiSource();
 
 const state = {
@@ -9,35 +11,15 @@ const state = {
   accessToken: TokenService.getToken(),
   authenticationErrorCode: 0,
   authenticationError: "",
-  user: {
-    id:'',
-      firstname:'',
-      lastname:'',
-      position:'',
-      email:'',
-      phone:'',
-      is_admin:0,
-      slug:''
-      },
-      lender:'',
-  developerprofile:'',
+  user: { },  
   isLoggedIn:false,
-  developersubscription:''
 }
 const mutations ={
   LENDER_USER(state,payload){
     state.lender = payload
   },
   UPDATED_USER_DATA(state,payload){
-    // console.log(payload)
-      state.user.id = payload.id
-      state.user.firstname = payload.firstname;
-      state.user.lastname = payload.lastname;
-      state.user.email = payload.email;
-      state.user.phone = payload.phone;
-      state.user.position = payload.position;
-      state.user.is_admin=payload.is_superadmin;
-      state.user.slug=payload.slug;
+      state.user = payload
   },
   loginRequest(state) {
     state.authenticating = true;
@@ -50,8 +32,6 @@ const mutations ={
     state.accessToken = data.token;
     state.authenticating = false;
     state.isLoggedIn = true;
-
-    // console.log(state.user);
   },
 
 
@@ -76,8 +56,8 @@ const actions = {
           TokenService.saveRefreshToken(response.token)
           ApiService.setHeader();
            commit("loginSuccess", res);
-           commit("UPDATED_USER_DATA", res.data.data.user);
-           router.push(router.history.current.query.redirect || "/home");
+           commit("UPDATED_USER_DATA", response.user);
+           router.push(router.history.current.query.redirect || response.user.role.role=="Admin"?"/dashboard":"/home");
            return true;
        })
 

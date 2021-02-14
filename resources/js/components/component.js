@@ -34,12 +34,10 @@ Vue.component('nav-list', NavList);
 
 const EmployeeTable = () => import( /* webpackChunkName: "component" */ './others/EmployeeTable')
 const ProfileComponent = () => import( /* webpackChunkName: "component" */ './others/ProfileComponent')
-const CompanyList = () => import( /* webpackChunkName: "component" */ './others/CompanyList')
 const CompanyCard = () => import( /* webpackChunkName: "component" */ './others/CompanyCard')
 
 Vue.component('employee-table', EmployeeTable);
 Vue.component('profile-component', ProfileComponent);
-Vue.component('company-list', CompanyList)
 Vue.component('company-card', CompanyCard);
 
 // External Components

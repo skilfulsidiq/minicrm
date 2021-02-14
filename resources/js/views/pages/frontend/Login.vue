@@ -59,6 +59,7 @@ export default {
             password:{required,minLength:minLength(6)}
         }
     },
+  
     methods:{
         login(){
               this.submitted = true;
@@ -69,7 +70,7 @@ export default {
                     return;
                 }
 
-                alert("SUCCESS!! :-)\n\n" + JSON.stringify(this.user));
+              this.$store.dispatch("login",this.form);
 
         }
     }

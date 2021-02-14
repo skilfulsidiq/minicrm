@@ -8,6 +8,30 @@ const backend_routes = [
     },
     component:() => import("../views/pages/backend/Home.vue")
   },
+   {
+       path: "/dashboard",
+       name: "dashboard",
+       meta: {
+           layout: "admin"
+       },
+       component: () => import("../views/pages/admin/Dashboard.vue")
+   },
+    {
+        path: "/companies",
+        name: "companies",
+        meta: {
+            layout: "admin"
+        },
+        component: () => import("../views/pages/admin/Company.vue")
+    },
+    {
+        path: "/employees",
+        name: "employees",
+        meta: {
+            layout: "admin"
+        },
+        component: () => import("../views/pages/admin/Employee.vue")
+    },
   // {
   //   path: "/all-properties",
   //   name: "all-properties",

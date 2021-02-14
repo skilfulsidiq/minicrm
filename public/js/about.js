@@ -128,7 +128,7 @@ __webpack_require__.r(__webpack_exports__);
         return;
       }
 
-      alert("SUCCESS!! :-)\n\n" + JSON.stringify(this.user));
+      this.$store.dispatch("login", this.form);
     }
   }
 });

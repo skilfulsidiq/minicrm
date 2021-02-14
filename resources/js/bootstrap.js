@@ -11,6 +11,8 @@ try {
     window.$ = window.jQuery = require('jquery');
 
     require('bootstrap');
+    // require ("../assets/slim");
+    // import '../assets/slim.js'
 } catch (e) {}
 
 /**
