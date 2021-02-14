@@ -50,6 +50,9 @@ export default {
             // update page of items
             this.pageOfItems = pageOfItems;
         }
+    },
+    created(){
+        console.log(this.companies);
     }
 }
 </script>

@@ -23,6 +23,9 @@ Route::group(['namespace'=>'Api'],function(){
     Route::post('/forgot-password','AuthController@forgot_password');
     Route::post('/change-password-code','AuthController@changePasswordUsingCode');
 
+
+    Route::get('/all-companies','GeneralController@allCompanies');
+
     
 });
 Route::group(['namespace'=>'Api/User','middleware'=>['auth:sanctum']],function(){

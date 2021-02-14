@@ -97,6 +97,9 @@ var customLabels = {
       // update page of items
       this.pageOfItems = pageOfItems;
     }
+  },
+  created: function created() {
+    console.log(this.companies);
   }
 });
 

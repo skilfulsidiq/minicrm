@@ -56,7 +56,7 @@ export class ApiSource {
 
   //  authentication apis
   async login(authData) {
-    return await this.sendrequest("post", "auth/login", authData);
+    return await this.sendrequest("post", "login", authData);
   }
   async register(authData) {
     return await this.sendrequest("post", "admin/register", authData);
@@ -70,8 +70,8 @@ export class ApiSource {
   async dashboardInfo() {
     return await this.sendrequest("get", "admin/dashboard");
   }
-  async propertiesList() {
-    return this.sendrequest("get", "admin/all-properties");
+  async companiesList() {
+    return this.sendrequest("get", "all-companies");
   }
   async notpaginatedpropertiesList() {
     return this.sendrequest("get", "admin/not-paginated-all-properties");

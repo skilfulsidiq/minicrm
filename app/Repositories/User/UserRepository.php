@@ -62,8 +62,7 @@ class UserRepository extends BaseRepository implements UserInterface{
         $status['msg'] = 'This account does not exist';
         $status['res'] = false;
         return $status;
-        public function changePasswordByCode($arr){
-}
+    }
 
     public function changePasswordByCode($arr){
         $status=[];
