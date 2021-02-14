@@ -11,18 +11,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _mixins_paginationMixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../mixins/paginationMixin */ "./resources/js/mixins/paginationMixin.js");
 //
 //
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Home",
+  mixins: [_mixins_paginationMixin__WEBPACK_IMPORTED_MODULE_0__.paginationMixin],
   computed: {
     userData: function userData() {
       var p = this.$store.state.authmodule.user;
       return p;
+    },
+    info: function info() {
+      var p = this.$store.state.general_module.companies_employee;
+      return p;
     }
+  },
+  methods: {
+    fetchInfo: function fetchInfo() {
+      this.$store.dispatch('allCompaniesEmployeeAction', this.userData.company.id);
+    }
+  },
+  created: function created() {
+    this.fetchInfo();
+    console.log(this.info);
   }
 });
 
@@ -116,9 +173,85 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [_vm._v("\n    " + _vm._s(_vm.userData.role.role) + "\n")])
+  return _c("div", { staticClass: "container" }, [
+    _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-12" }, [
+        _c("div", { staticClass: "card" }, [
+          _vm._m(0),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-body table-responsive p-0" }, [
+            _c("table", { staticClass: "table table-hover text-nowrap" }, [
+              _vm._m(1),
+              _vm._v(" "),
+              _c(
+                "tbody",
+                _vm._l(_vm.pageOfItems, function(user, i) {
+                  return _c("tr", { key: user.id }, [
+                    _c("td", [_vm._v(_vm._s(user.id))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(user.company.name))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(user.name))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(user.email))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(user.role.role) + " User")])
+                  ])
+                }),
+                0
+              )
+            ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: " text-center pb-0 p-5 mt-5" },
+              [
+                _c("jw-pagination", {
+                  attrs: {
+                    pageSize: 10,
+                    items: _vm.info,
+                    styles: _vm.customStyles,
+                    labels: _vm.customLabels
+                  },
+                  on: { changePage: _vm.onChangePage }
+                })
+              ],
+              1
+            )
+          ])
+        ])
+      ])
+    ])
+  ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header" }, [
+      _c("h3", { staticClass: "card-title" }, [_vm._v(" Employees")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v(" # ")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Company")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Name")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Email")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Role")])
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 

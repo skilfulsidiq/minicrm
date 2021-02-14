@@ -15,6 +15,9 @@ class Company extends Model
         $this->attributes['name']= $value;
         $this->attributes['slug']= Str::slug($value);
     }
+    public function getLogoAttribute(){
+        return secure_url($this->attributes['logo']);
+    }
     public function users(){
         return $this->hasMany(User::class,'company_id');
     }

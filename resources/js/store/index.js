@@ -36,6 +36,6 @@ export default new Vuex.Store({
   modules: {
     authmodule,
     general_module,
-    // dashboard_module
+    dashboard_module
   }
 });

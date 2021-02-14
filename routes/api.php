@@ -28,7 +28,19 @@ Route::group(['namespace'=>'Api'],function(){
 
     
 });
-Route::group(['namespace'=>'Api/User','middleware'=>['auth:sanctum']],function(){
+Route::group(['namespace'=>'Api\User','middleware'=>['auth:sanctum']],function(){
 
-    Route::post('/update-profile/{slug}','GeneralController@updateProfile');
+    Route::get('/company_employee/{company_id}','UserController@allCompanyEmployees');
+    Route::post('/update-profile/{slug}','UserController@updateProfile');
+    
+});
+
+Route::group(['prefix'=>'admin','namespace'=>'Api\Admin','middleware'=>['auth:sanctum','admin']], function () {
+    Route::get('/dashboard', 'AdminController@dashboardApi');
+    Route::post('/update-company/{slug?}', 'CompanyController@storeOrUpdateCompany');
+    Route::get('/delete-company/{slug}', 'CompanyController@removeCompany');
+
+    Route::get('/all-employees', 'EmployeeController@allEmployee');
+    Route::post('/update-employee/{slug?}', 'EmployeeController@storeOrUpdateEmployee');
+    Route::get('/delete-employee/{slug}', 'EmployeeController@removeEmployee');
 });

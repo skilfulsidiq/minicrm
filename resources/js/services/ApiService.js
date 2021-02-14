@@ -64,8 +64,8 @@ export class ApiSource {
   async changepassword(authData) {
     return await this.sendrequest("post", "adminchange-password", authData);
   }
-  async updateprofile(authData) {
-    return await this.sendrequest("post", "admin/update-profile", authData);
+  async updateprofile(authData,slug) {
+    return await this.sendrequest("post", "update-profile/+slug", authData);
   }
   async dashboardInfo() {
     return await this.sendrequest("get", "admin/dashboard");
@@ -73,11 +73,23 @@ export class ApiSource {
   async companiesList() {
     return this.sendrequest("get", "all-companies");
   }
-  async notpaginatedpropertiesList() {
-    return this.sendrequest("get", "admin/not-paginated-all-properties");
+  async addCompany(data,slug) {
+    return this.sendrequest("post", "admin/update-company/"+slug,data);
   }
-  async addProperty(step, slug, formdata) {
-    return this.sendrequest("post", "admin/add-property/" + step + "/" + slug, formdata);
+  async deleteCompany(slug) {
+    return this.sendrequest("get", "admin/delete-company/"+slug);
+  }
+  async companyEmployee(id) {
+    return this.sendrequest("get", "admin/company_employee/" + id);
+  }
+   async employeeList() {
+       return this.sendrequest("get", "admin/all-employees");
+   }
+  async addEmployee(data,slug) {
+    return this.sendrequest("post", "admin/update-employee/"+slug,data);
+  }
+  async deleteEmployee(slug) {
+    return this.sendrequest("get", "admin/delete-employee/"+slug);
   }
 }
 export default ApiService;

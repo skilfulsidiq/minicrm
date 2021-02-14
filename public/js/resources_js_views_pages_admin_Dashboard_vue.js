@@ -45,7 +45,29 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({});
+//
+//
+//
+//
+//
+//
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: "Dashboard",
+  computed: {
+    info: function info() {
+      var p = this.$store.state.dashboard_module.dashboard;
+      return p;
+    }
+  },
+  methods: {
+    fetchInfo: function fetchInfo() {
+      this.$store.dispatch('dashboardInfoAction');
+    }
+  },
+  created: function created() {
+    this.fetchInfo();
+  }
+});
 
 /***/ }),
 
@@ -137,53 +159,65 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("div", { staticClass: "row row-xs" }, [
-      _c(
-        "div",
-        { staticClass: "col-sm-6 col-md-6" },
-        [
-          _c("router-link", { attrs: { to: "/companies" } }, [
-            _c("div", { staticClass: "card card-status" }, [
-              _c("div", { staticClass: "media" }, [
-                _c("i", {
-                  staticClass: "icon ion-ios-world-outline tx-purple"
-                }),
-                _vm._v(" "),
-                _c("div", { staticClass: "media-body" }, [
-                  _c("h1", [_vm._v("20")]),
-                  _vm._v(" "),
-                  _c("p", [_vm._v("Total Companies")])
-                ])
-              ])
-            ])
-          ])
-        ],
-        1
-      ),
+  return _c(
+    "div",
+    [
+      _c("bread-crumb", { attrs: { name: "Dashboard" } }),
       _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "col-sm-6 col-md-6 mg-t-10 mg-sm-t-0" },
-        [
-          _c("router-link", { attrs: { to: "/employees" } }, [
-            _c("div", { staticClass: "card card-status" }, [
-              _c("div", { staticClass: "media" }, [
-                _c("i", { staticClass: "icon ion-ios-people-outline tx-teal" }),
-                _vm._v(" "),
-                _c("div", { staticClass: "media-body" }, [
-                  _c("h1", [_vm._v("10")]),
-                  _vm._v(" "),
-                  _c("p", [_vm._v("Total Employee")])
+      _c("div", { staticClass: "content" }, [
+        _c("div", { staticClass: "container" }, [
+          _c("div", { staticClass: "row row-xs" }, [
+            _c(
+              "div",
+              { staticClass: "col-sm-6 col-md-6" },
+              [
+                _c("router-link", { attrs: { to: "/companies" } }, [
+                  _c("div", { staticClass: "card card-status" }, [
+                    _c("div", { staticClass: "media" }, [
+                      _c("i", {
+                        staticClass: "icon ion-ios-world-outline tx-purple"
+                      }),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "media-body" }, [
+                        _c("h1", [_vm._v(_vm._s(_vm.info.companies))]),
+                        _vm._v(" "),
+                        _c("p", [_vm._v("Total Companies")])
+                      ])
+                    ])
+                  ])
                 ])
-              ])
-            ])
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "col-sm-6 col-md-6 mg-t-10 mg-sm-t-0" },
+              [
+                _c("router-link", { attrs: { to: "/employees" } }, [
+                  _c("div", { staticClass: "card card-status" }, [
+                    _c("div", { staticClass: "media" }, [
+                      _c("i", {
+                        staticClass: "icon ion-ios-people-outline tx-teal"
+                      }),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "media-body" }, [
+                        _c("h1", [_vm._v(_vm._s(_vm.info.users))]),
+                        _vm._v(" "),
+                        _c("p", [_vm._v("Total Employee")])
+                      ])
+                    ])
+                  ])
+                ])
+              ],
+              1
+            )
           ])
-        ],
-        1
-      )
-    ])
-  ])
+        ])
+      ])
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true

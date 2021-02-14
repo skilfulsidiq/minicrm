@@ -12,35 +12,13 @@
     </div>
 </template>
 <script>
-const customStyles = {
-    ul: {
-        // border: '2px solid red'
-    },
-    li: {
-        display: 'inline-block',
-        // width:'100px'
-        
-        // border: '2px dotted green'
-    },
-    a: {
-        color: 'blue',
-        // width:'100%;'
-    },
-  
-};
-const customLabels = {
-    first: '<<',
-    last: '>>',
-    previous: '<',
-    next: '>'
-};
+
+import {paginationMixin} from '../../../mixins/paginationMixin'
 export default {
     name:"Welcome",
+       mixins:[paginationMixin],
         data() {
         return {
-            pageOfItems: [],
-            customStyles,
-            customLabels
         };
     },
     computed:{
@@ -53,9 +31,6 @@ export default {
         fetchAllCompanies(){
             this.$store.dispatch('allCompaniesAction')
         },
-        onChangePage(pageOfItems) {
-            this.pageOfItems = pageOfItems;
-        }
     },
     created(){
         this.fetchAllCompanies();

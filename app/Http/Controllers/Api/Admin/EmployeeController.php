@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Controllers\BaseController;
 use App\Http\Controllers\Controller;
@@ -22,7 +22,7 @@ class EmployeeController extends BaseController
     public function allEmployee(){
          $this->setPageTitle('Employees', 'All Employees');
          $users = $this->employee->allUsers();
-         return view('admin.employee.index',compact('users'));
+         return $this->sendSuccess($users,'All employees');
     }
         public function showEmployeeForm($slug=null){
         $edit = false;

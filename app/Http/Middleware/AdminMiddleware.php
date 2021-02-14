@@ -29,7 +29,7 @@ class AdminMiddleware
             case 'Employee':
                 return redirect()->route('employee');
         }
-        abort(404);
+        abort(404,'You are not authorize');
         // return $next($request);
     }
 }
