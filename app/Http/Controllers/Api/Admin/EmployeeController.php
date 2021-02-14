@@ -45,16 +45,16 @@ class EmployeeController extends BaseController
         $incomeingData = $request->only(['name','email','password','company_id','role_id']);
         $feedback = $this->employee->addOrUpdateUser($incomeingData, $slug);
          if (!$feedback['status']) {
-            return $this->responseRedirectBack('Error while updating employee','error',true,true);
+            return $this->sendError('Error while updating employee',[$feedback['msg']]);
         }
-        return $this->responseRedirect('admin.employee', 'Employee updated successfully' ,'success',false, false);
+       return $this->sendSuccess($feedback['data'],'Employee info updated');
 
     }
     public function removeEmployee($slug){
         $feedback = $this->employee->deleteUser($slug);
          if (!$feedback['status']) {
-            return $this->responseRedirectBack('Error while deleting employee','error',true,true);
+            return $this->sendError('Error while deleting employee',[$feedback['msg']]);
         }
-        return $this->responseRedirect('admin.employee', 'Employee deleted successfully' ,'success',false, false);
+        return $this->sendSuccess($feedback['data'],'Employee info deleted');
     }
 }

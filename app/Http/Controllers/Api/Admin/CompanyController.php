@@ -15,9 +15,9 @@ class CompanyController extends BaseController
         $this->company= $company;
     }
     public function allCompanies(){
-         $this->setPageTitle('Company', 'All Companies');
+        //  $this->setPageTitle('Company', 'All Companies');
          $companies = $this->company->allCompanies();
-         return view('admin.company.index',compact('companies'));
+         return $this->sendSuccess($companies,'all Companies');
     }
 
     public function showCompanyForm($slug=null){
@@ -43,16 +43,16 @@ class CompanyController extends BaseController
         $incomeingData['image']=$image;
         $feedback = $this->company->addOrUpdateCompany($incomeingData, $slug);
          if (!$feedback['status']) {
-            return $this->responseRedirectBack('Error while updating company','error',true,true);
+            return $this->sendError('Error while updating company',[$feedback['msg']]);
         }
-        return $this->responseRedirect('admin.companies', 'Company updated successfully' ,'success',false, false);
+        return $this->sendSuccess($feedback['data'],'company info updated');
 
     }
     public function removeCompany($slug){
         $feedback = $this->company->deleteCompany($slug);
          if (!$feedback['status']) {
-            return $this->responseRedirectBack('Error while deleting company','error',true,true);
+            return $this->sendError('Error while deleting company',[$feedback['msg']]);
         }
-        return $this->responseRedirect('admin.companies', 'Company deleted successfully' ,'success',false, false);
+       return $this->sendSuccess($feedback['data'],'company info deleted');
     }
 }

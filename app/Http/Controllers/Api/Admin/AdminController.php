@@ -18,22 +18,12 @@ use Illuminate\Support\Facades\DB;
 
 class AdminController extends BaseController
 {
-    public $profile;
-    public $pro_request;
-    public $property;
-    public function __construct()
-    {
-        // $this->middleware('auth:admin');
-            // $this->profile = $user;
-            // $this->pro_request = $req;
-            // $this->property=$property;
-    }
-    public function dashboard(){
-        $this->setPageTitle('Dashboard', 'Analytic');
-        $total_companies = Company::count();
+   
+   
+    public function dashboardApi(){
+         $total_companies = Company::count();
         $total_users = User::notAdmin()->count();
-        $data="welcome";
-        return view('admin.dashboard',compact('total_companies','total_users'));
+        $data=['companies'=>$total_companies,'users'=>$total_users]   ;
+        return $this->sendSuccess($data,'dashboard info');
     }
-    
 }
