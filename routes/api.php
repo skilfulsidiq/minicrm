@@ -25,6 +25,7 @@ Route::group(['namespace'=>'Api'],function(){
 
 
     Route::get('/all-companies','GeneralController@allCompanies');
+    Route::get('/all-roles','GeneralController@allRoles');
 
     
 });

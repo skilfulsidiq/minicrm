@@ -2667,6 +2667,15 @@ var backend_routes = [{
     return __webpack_require__.e(/*! import() */ "resources_js_views_pages_backend_Home_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../views/pages/backend/Home.vue */ "./resources/js/views/pages/backend/Home.vue"));
   }
 }, {
+  path: "/profile",
+  name: "profile",
+  meta: {
+    layout: "backend"
+  },
+  component: function component() {
+    return __webpack_require__.e(/*! import() */ "resources_js_views_pages_backend_Profile_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../views/pages/backend/Profile.vue */ "./resources/js/views/pages/backend/Profile.vue"));
+  }
+}, {
   path: "/dashboard",
   name: "dashboard",
   meta: {
@@ -3154,14 +3163,14 @@ var ApiSource = /*#__PURE__*/function () {
       return companiesList;
     }()
   }, {
-    key: "addCompany",
+    key: "fetchRole",
     value: function () {
-      var _addCompany = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee8(data, slug) {
+      var _fetchRole = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee8() {
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee8$(_context8) {
           while (1) {
             switch (_context8.prev = _context8.next) {
               case 0:
-                return _context8.abrupt("return", this.sendrequest("post", "admin/update-company/" + slug, data));
+                return _context8.abrupt("return", this.sendrequest("get", "all-roles"));
 
               case 1:
               case "end":
@@ -3169,6 +3178,30 @@ var ApiSource = /*#__PURE__*/function () {
             }
           }
         }, _callee8, this);
+      }));
+
+      function fetchRole() {
+        return _fetchRole.apply(this, arguments);
+      }
+
+      return fetchRole;
+    }()
+  }, {
+    key: "addCompany",
+    value: function () {
+      var _addCompany = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee9(data, slug) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee9$(_context9) {
+          while (1) {
+            switch (_context9.prev = _context9.next) {
+              case 0:
+                return _context9.abrupt("return", this.sendrequest("post", "admin/update-company/" + slug, data));
+
+              case 1:
+              case "end":
+                return _context9.stop();
+            }
+          }
+        }, _callee9, this);
       }));
 
       function addCompany(_x9, _x10) {
@@ -3180,19 +3213,19 @@ var ApiSource = /*#__PURE__*/function () {
   }, {
     key: "deleteCompany",
     value: function () {
-      var _deleteCompany = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee9(slug) {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee9$(_context9) {
+      var _deleteCompany = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee10(slug) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee10$(_context10) {
           while (1) {
-            switch (_context9.prev = _context9.next) {
+            switch (_context10.prev = _context10.next) {
               case 0:
-                return _context9.abrupt("return", this.sendrequest("get", "admin/delete-company/" + slug));
+                return _context10.abrupt("return", this.sendrequest("get", "admin/delete-company/" + slug));
 
               case 1:
               case "end":
-                return _context9.stop();
+                return _context10.stop();
             }
           }
-        }, _callee9, this);
+        }, _callee10, this);
       }));
 
       function deleteCompany(_x11) {
@@ -3204,19 +3237,19 @@ var ApiSource = /*#__PURE__*/function () {
   }, {
     key: "companyEmployee",
     value: function () {
-      var _companyEmployee = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee10(id) {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee10$(_context10) {
+      var _companyEmployee = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee11(id) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee11$(_context11) {
           while (1) {
-            switch (_context10.prev = _context10.next) {
+            switch (_context11.prev = _context11.next) {
               case 0:
-                return _context10.abrupt("return", this.sendrequest("get", "admin/company_employee/" + id));
+                return _context11.abrupt("return", this.sendrequest("get", "company_employee/" + id));
 
               case 1:
               case "end":
-                return _context10.stop();
+                return _context11.stop();
             }
           }
-        }, _callee10, this);
+        }, _callee11, this);
       }));
 
       function companyEmployee(_x12) {
@@ -3228,19 +3261,19 @@ var ApiSource = /*#__PURE__*/function () {
   }, {
     key: "employeeList",
     value: function () {
-      var _employeeList = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee11() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee11$(_context11) {
+      var _employeeList = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee12() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee12$(_context12) {
           while (1) {
-            switch (_context11.prev = _context11.next) {
+            switch (_context12.prev = _context12.next) {
               case 0:
-                return _context11.abrupt("return", this.sendrequest("get", "admin/all-employees"));
+                return _context12.abrupt("return", this.sendrequest("get", "admin/all-employees"));
 
               case 1:
               case "end":
-                return _context11.stop();
+                return _context12.stop();
             }
           }
-        }, _callee11, this);
+        }, _callee12, this);
       }));
 
       function employeeList() {
@@ -3252,19 +3285,19 @@ var ApiSource = /*#__PURE__*/function () {
   }, {
     key: "addEmployee",
     value: function () {
-      var _addEmployee = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee12(data, slug) {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee12$(_context12) {
+      var _addEmployee = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee13(data, slug) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee13$(_context13) {
           while (1) {
-            switch (_context12.prev = _context12.next) {
+            switch (_context13.prev = _context13.next) {
               case 0:
-                return _context12.abrupt("return", this.sendrequest("post", "admin/update-employee/" + slug, data));
+                return _context13.abrupt("return", this.sendrequest("post", "admin/update-employee/" + slug, data));
 
               case 1:
               case "end":
-                return _context12.stop();
+                return _context13.stop();
             }
           }
-        }, _callee12, this);
+        }, _callee13, this);
       }));
 
       function addEmployee(_x13, _x14) {
@@ -3276,19 +3309,19 @@ var ApiSource = /*#__PURE__*/function () {
   }, {
     key: "deleteEmployee",
     value: function () {
-      var _deleteEmployee = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee13(slug) {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee13$(_context13) {
+      var _deleteEmployee = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee14(slug) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee14$(_context14) {
           while (1) {
-            switch (_context13.prev = _context13.next) {
+            switch (_context14.prev = _context14.next) {
               case 0:
-                return _context13.abrupt("return", this.sendrequest("get", "admin/delete-employee/" + slug));
+                return _context14.abrupt("return", this.sendrequest("get", "admin/delete-employee/" + slug));
 
               case 1:
               case "end":
-                return _context13.stop();
+                return _context14.stop();
             }
           }
-        }, _callee13, this);
+        }, _callee14, this);
       }));
 
       function deleteEmployee(_x15) {
@@ -4036,11 +4069,15 @@ __webpack_require__.r(__webpack_exports__);
 var api = new _services_ApiService__WEBPACK_IMPORTED_MODULE_0__.ApiSource();
 var state = {
   all_companies: [],
-  companies_employee: []
+  companies_employee: [],
+  all_roles: []
 };
 var mutations = {
   ALL_COMPANIES: function ALL_COMPANIES(state, payload) {
     state.all_companies = payload; // console.log(payload)
+  },
+  ALL_ROLES: function ALL_ROLES(state, payload) {
+    state.all_roles = payload;
   },
   COMPANY_EMPLOYEES: function COMPANY_EMPLOYEES(state, payload) {
     state.companies_employee = payload;
@@ -4054,10 +4091,19 @@ var actions = {
       commit("ALL_COMPANIES", p);
     });
   },
-  allCompaniesEmployeeAction: function allCompaniesEmployeeAction(_ref2, company_id) {
+  allRoleAction: function allRoleAction(_ref2) {
     var commit = _ref2.commit;
+    api.fetchRole().then(function (res) {
+      var p = res.data.data;
+      console.log(p);
+      commit("ALL_ROLES", p);
+    });
+  },
+  allCompaniesEmployeeAction: function allCompaniesEmployeeAction(_ref3, company_id) {
+    var commit = _ref3.commit;
     api.companyEmployee(company_id).then(function (res) {
       var p = res.data.data;
+      console.log(p);
       commit("COMPANY_EMPLOYEES", p);
     });
   }
@@ -44170,10 +44216,10 @@ var render = function() {
                         },
                         [
                           _c(
-                            "a",
+                            "router-link",
                             {
                               staticClass: "dropdown-item",
-                              attrs: { href: "#" }
+                              attrs: { to: "/profile" }
                             },
                             [
                               _vm._v(
@@ -44198,7 +44244,8 @@ var render = function() {
                               )
                             ]
                           )
-                        ]
+                        ],
+                        1
                       )
                     ])
                   ])
@@ -63023,7 +63070,7 @@ var index = {
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames not based on template
-/******/ 			if ({"component":1,"about":1,"resources_js_views_pages_backend_Home_vue":1,"resources_js_views_pages_admin_Dashboard_vue":1,"resources_js_views_pages_admin_Company_vue":1,"resources_js_views_pages_admin_Employee_vue":1}[chunkId]) return "js/" + chunkId + ".js";
+/******/ 			if ({"component":1,"about":1,"resources_js_views_pages_backend_Home_vue":1,"resources_js_views_pages_backend_Profile_vue":1,"resources_js_views_pages_admin_Dashboard_vue":1,"resources_js_views_pages_admin_Company_vue":1,"resources_js_views_pages_admin_Employee_vue":1}[chunkId]) return "js/" + chunkId + ".js";
 /******/ 			// return url for filenames based on template
 /******/ 			return undefined;
 /******/ 		};

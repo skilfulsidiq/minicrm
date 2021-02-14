@@ -20,8 +20,8 @@
 
     <!-- Styles -->
     <link href="{{ mix('css/app.css') }}" rel="stylesheet" type="text/css">
-    <link href="{{ asset('css/parsley.css') }}" rel="stylesheet">
-    <link rel="stylesheet" href="{{asset('assets/css/slim.min.css')}}">
+    {{-- <link href="{{ asset('css/parsley.css') }}" rel="stylesheet"> --}}
+    {{-- <link rel="stylesheet" href="{{asset('assets/css/slim.min.css')}}"> --}}
     <link rel="stylesheet" href="{{asset('assets/css/mycss.css')}}">
 </head>
 <body>

@@ -24,8 +24,8 @@
 
                                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                         
-                                        <a class="dropdown-item" href="#">Profile
-                                        </a>
+                                        <router-link to="/profile" class="dropdown-item">Profile
+                                        </router-link>
                                         <button class=" btn-text dropdown-item"  @click="logout()">
                                             Logout
                                         </button>

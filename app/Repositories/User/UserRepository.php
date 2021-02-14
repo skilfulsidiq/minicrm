@@ -135,7 +135,7 @@ class UserRepository extends BaseRepository implements UserInterface{
      * @param $company_id
      */
     public function companyUsers($company_id){
-        $users = User::with('company')->where('company_id', $company_id)->orderBy('created_at','desc')->get();
+        $users = User::with('company','role')->where('company_id', $company_id)->orderBy('created_at','desc')->get();
         return $users;
     }
     /**

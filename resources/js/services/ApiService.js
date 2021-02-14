@@ -73,6 +73,9 @@ export class ApiSource {
   async companiesList() {
     return this.sendrequest("get", "all-companies");
   }
+  async fetchRole() {
+    return this.sendrequest("get", "all-roles");
+  }
   async addCompany(data,slug) {
     return this.sendrequest("post", "admin/update-company/"+slug,data);
   }
@@ -80,7 +83,7 @@ export class ApiSource {
     return this.sendrequest("get", "admin/delete-company/"+slug);
   }
   async companyEmployee(id) {
-    return this.sendrequest("get", "admin/company_employee/" + id);
+    return this.sendrequest("get", "company_employee/" + id);
   }
    async employeeList() {
        return this.sendrequest("get", "admin/all-employees");

@@ -1,10 +1,10 @@
 <template>
     <div class="container">
-        <div class="row">
+        <div class="row mt-5" >
           <div class="col-12">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title"> Employees</h3>
+                <h3 class="card-title"> {{userData.company.name}}</h3>
               </div>
               <!-- /.card-header -->
               <div class="card-body table-responsive p-0">
@@ -41,7 +41,8 @@
             </div>
             <!-- /.card -->
           </div>
-        </div>
+        </div> 
+     
     </div>
 </template>
 <script>
@@ -49,6 +50,10 @@ import {paginationMixin} from '../../../mixins/paginationMixin'
 export default {
     name:"Home",
     mixins:[paginationMixin],
+    data(){
+        return{
+        }
+    },
     computed:{
         userData(){
             let p = this.$store.state.authmodule.user;
@@ -67,7 +72,6 @@ export default {
     },
     created(){
       this.fetchInfo();
-      console.log(this.info);
     }
 }
 </script>

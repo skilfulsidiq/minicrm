@@ -20,7 +20,7 @@ class UserController extends BaseController
     
     public function allCompanyEmployees($company_id){
         $employees = $this->employee->companyUsers($company_id);
-        return $this->sendSuccess($employees,'All employye');
+        return $this->sendSuccess($employees,'All employess');
     }
     public function updateProfile(Request $request,$slug){
          $validator = Validator::make($request->all(),['email' => 'required|email','name' => 'required']);

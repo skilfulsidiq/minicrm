@@ -8,6 +8,14 @@ const backend_routes = [
     },
     component:() => import("../views/pages/backend/Home.vue")
   },
+  {
+    path: "/profile",
+    name: "profile",
+    meta: {
+      layout: "backend"
+    },
+    component:() => import("../views/pages/backend/Profile.vue")
+  },
    {
        path: "/dashboard",
        name: "dashboard",
