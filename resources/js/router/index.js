@@ -6,13 +6,23 @@ import {
 } from '../services/TokenService'
 import EventBus from '../services/event'
 import backend_routes from './backend_routes'
-import Login from '../views/frontend/Login.vue'
+import Welcome from '../views/pages/frontend/Welcome'
 
 
 Vue.use(VueRouter)
 
 let frontend_routes = [
 
+  {
+    path: '/welcome',
+    name: 'welcome',
+    meta: {
+      layout: "frontend",
+      public: true,
+      onlylogout: true
+    },
+    component: Welcome
+  },
   {
     path: '/login',
     name: 'login',
@@ -21,34 +31,24 @@ let frontend_routes = [
       public: true,
       onlylogout: true
     },
-    component: Login
-  },
-  {
-    path: '/regiser',
-    name: 'register',
-    meta: {
-      layout: "frontend",
-      public: true,
-      onlylogout: true
-    },
     component: () =>
-      import( /* webpackChunkName: "about" */ '../views/frontend/Register.vue')
+      import( /* webpackChunkName: "about" */ '../views/pages/frontend/Login.vue')
   },
-  {
-    path: '/forgot',
-    name: 'forgot',
-    meta: {
-      layout: "frontend",
-      public: true,
-      onlylogout: true
-    },
-    component: () =>
-      import( /* webpackChunkName: "about" */ '../views/frontend/Forgot.vue')
-  },
+  // {
+  //   path: '/forgot',
+  //   name: 'forgot',
+  //   meta: {
+  //     layout: "frontend",
+  //     public: true,
+  //     onlylogout: true
+  //   },
+  //   component: () =>
+  //     import( /* webpackChunkName: "about" */ '../views/frontend/Forgot.vue')
+  // },
   {
     path: '/',
     redirect: {
-      name: 'login'
+      name: 'welcome'
     }
   },
   {
@@ -61,9 +61,10 @@ let frontend_routes = [
       // middleware: [ auth]
     },
     component: () =>
-      import( /* webpackChunkName: "about" */ '../views/frontend/Page404.vue')
+      import( /* webpackChunkName: "about" */ '../views/pages/Page404.vue')
   }
 ];
+
 const routes = frontend_routes.concat(backend_routes)
 // console.log(backend_routes)
 const router = new VueRouter({
@@ -75,35 +76,36 @@ const router = new VueRouter({
     window.scrollTo(0, 0);
   }
 });
-router.beforeResolve((to, from, next) => {
-  if (to.name) {
-    // NProgress.start();
-    EventBus.$emit("loading", true)
-  }
-  next();
-});
 
-router.afterEach((to, from) => {
-  // NProgress.done();
-  EventBus.$emit("loading", false)
-});
-router.beforeEach((to, from, next) => {
-  const isPublic = to.matched.some(record => record.meta.public)
-  const onlyWhenLoggedOut = to.matched.some(record => record.meta.onlylogout)
-  let loggedIn = !!TokenService.getToken();
-  if (!isPublic && !loggedIn && to.path !== '/login') {
-      return next({
-          path: '/login',
-          // query: {
-          //     redirect: to.fullPath
-          // } // Store the full path to redirect the user to after login
-      });
+// router.beforeResolve((to, from, next) => {
+//   if (to.name) {
+//     // NProgress.start();
+//     EventBus.$emit("loading", true)
+//   }
+//   next();
+// });
 
-  }
-  if (loggedIn && onlyWhenLoggedOut) {
-      return next('/home')
-  }
-  next();
-});
+// router.afterEach((to, from) => {
+//   // NProgress.done();
+//   EventBus.$emit("loading", false)
+// });
+// router.beforeEach((to, from, next) => {
+//   const isPublic = to.matched.some(record => record.meta.public)
+//   const onlyWhenLoggedOut = to.matched.some(record => record.meta.onlylogout)
+//   let loggedIn = !!TokenService.getToken();
+//   if (!isPublic && !loggedIn && to.path !== '/login') {
+//       return next({
+//           path: '/login',
+//           // query: {
+//           //     redirect: to.fullPath
+//           // } // Store the full path to redirect the user to after login
+//       });
+
+//   }
+//   if (loggedIn && onlyWhenLoggedOut) {
+//       return next('/home')
+//   }
+//   next();
+// });
 
 export default router

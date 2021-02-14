@@ -1,4 +1,3 @@
-import Home from "../views/backend/Home.vue";
 
 const backend_routes = [
   {
@@ -7,7 +6,7 @@ const backend_routes = [
     meta: {
       layout: "backend"
     },
-    component: Home
+    component:() => import("../views/pages/backend/Home.vue")
   },
   // {
   //   path: "/all-properties",

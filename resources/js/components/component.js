@@ -5,6 +5,7 @@ import Vue from 'vue'
 //layouts
 import Frontend from '../views/layouts/Frontend.vue'
 import Backend from '../views/layouts/Backend.vue'
+import Admin from '../views/layouts/Admin.vue'
 
 import MyLoader from '../components/general/MyLoader.vue'
 import Success from '../components/general/Success.vue'
@@ -17,6 +18,7 @@ import VueSwal from 'vue-swal'
 
 Vue.component('frontend-layout', Frontend);
 Vue.component('backend-layout', Backend);
+Vue.component('admin-layout', Admin);
 
 // Vue.component('bottomnav', BottomNav);
 // Vue.component('seperator', Seperator);

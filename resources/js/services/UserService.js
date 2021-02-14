@@ -24,7 +24,7 @@ const UserService = {
 	//  }
 	login: async function (data) {
 		try {
-			const response = await ApiService.post('developerapp/nedco/auth/login',data)
+			const response = await ApiService.post('dauth/login',data)
 			TokenService.saveToken(response.data.data.token)
 			TokenService.saveUser(response.data.data.user)
 			TokenService.saveRefreshToken(response.data.data.token)

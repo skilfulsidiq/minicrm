@@ -17,4 +17,7 @@ class GeneralController extends Controller
         // dd($companies);
         return view('welcome',compact('companies'));
     }
+    public function showApp(){
+        return view('app');
+    }
 }

@@ -1,9 +1,7 @@
 import { TokenService } from "../../services/TokenService";
 import UserService from "../../services/UserService";
 import router from "../../router/index"
-import {
-  ApiSource
-} from "../../services/ApiService";
+import {ApiSource} from "../../services/ApiService";
 const api = new ApiSource();
 
 const state = {
@@ -71,10 +69,14 @@ const mutations ={
 const actions = {
   async login({ commit }, data) {
 		commit("loginRequest");
-       await UserService.login(data).then((res)=>{
+       await api.login(data).then((res)=>{
+         let response = res.data.data;
+          TokenService.saveToken(response.token)
+          TokenService.saveUser(response.user)
+          TokenService.saveRefreshToken(response.token)
+          ApiService.setHeader();
            commit("loginSuccess", res);
            commit("UPDATED_USER_DATA", res.data.data.user);
-           commit("LENDER_USER", res.data.data.lender);
            router.push(router.history.current.query.redirect || "/home");
            return true;
        })
@@ -106,7 +108,10 @@ const actions = {
     },
     
   logout({ commit }) {
-    UserService.logout();
+    	TokenService.removeToken()
+    	TokenService.removeUser()
+    	TokenService.removeRefreshToken()
+    	ApiService.removeHeader()
     commit("logoutSuccess");
     router.push({name:'login'});
 }

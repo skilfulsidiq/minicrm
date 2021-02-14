@@ -5,9 +5,6 @@ import VuexPersistence from "vuex-persist";
 import * as Cookies from "js-cookie";
 import authmodule from "./store_modules/auth";
 import dashboard_module from "./store_modules/dashboard";
-import property_module from "./store_modules/properties";
-import general_module from "./store_modules/general";
-import staff_module from "./store_modules/staff_module";
 
 Vue.use(Vuex);
 
@@ -37,9 +34,6 @@ export default new Vuex.Store({
   ],
   modules: {
     authmodule,
-    dashboard_module,
-    property_module,
-    general_module,
-    staff_module
+    dashboard_module
   }
 });

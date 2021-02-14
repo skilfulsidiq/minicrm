@@ -8,12 +8,8 @@
 const frontend = 'frontend'
 export default {
   name: 'App',
-
-  data: () => ({
-    //
-  }),
   computed:{
-    layout(){
+    layout(){  
       return (this.$route.meta.layout || frontend)+'-layout'
     }
   }
