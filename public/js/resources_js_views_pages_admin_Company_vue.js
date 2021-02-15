@@ -212,6 +212,7 @@ __webpack_require__.r(__webpack_exports__);
         form: this.form,
         slug: this.slug
       };
+      console.log(fm);
       this.$store.dispatch("addCompanyAction", fm).then(function (res) {
         _this.closeModal();
 
@@ -246,6 +247,43 @@ __webpack_require__.r(__webpack_exports__);
           swal("Deletion is Cancelled");
         }
       });
+    },
+    onFileChange: function onFileChange(file) {
+      var maxSize = this.maxSize;
+      var imageFile = file[0];
+
+      if (file.length > 0) {
+        var size = imageFile.size / maxSize / maxSize;
+
+        if (!imageFile.type.match('image.*')) {
+          // check whether the upload is an image
+          // this.errorDialog = true
+          // this.errorText = 'Please choose an image file'
+          swal('Please choose an image file', {
+            icon: "warning"
+          });
+        } else if (size > 1) {
+          // check whether the size is greater than the size limit
+          swal('Your file is too big! Please select an image under 1MB', {
+            icon: "warning"
+          }); // this.errorDialog = true
+          // this.errorText = 'Your file is too big! Please select an image under 1MB'
+        } else {
+          // Append file into FormData and turn file into image URL
+          var formData = new FormData();
+          var reader = new FileReader();
+          this.form.image = imageFile; // reader.readAsDataURL(imageFile)
+          //  onFileChange       reader.onload = ()=> {
+          //             this.avatar.formData = reader.result;
+          //             // console.log(reader.result);
+          //         };
+          //         let imageURL = URL.createObjectURL(imageFile)
+          //         this.avatar.imageURL = imageURL
+          //         // Emit the FormData and image URL to the parent component
+          //         // this.$emit('input', { formData, imageURL })
+          //   onFileChange  
+        }
+      }
     }
   },
   created: function created() {
@@ -648,7 +686,19 @@ var render = function() {
                           : _vm._e()
                       ]),
                       _vm._v(" "),
-                      _vm._m(2)
+                      _c("div", { staticClass: "form-group" }, [
+                        _c("label", { attrs: { for: "" } }, [_vm._v("Logo")]),
+                        _vm._v(" "),
+                        _c("input", {
+                          staticClass: "form-control",
+                          attrs: { type: "file" },
+                          on: {
+                            change: function($event) {
+                              return _vm.onFileChange($event.target.files)
+                            }
+                          }
+                        })
+                      ])
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "modal-footer" }, [
@@ -720,16 +770,6 @@ var staticRenderFns = [
       },
       [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
     )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c("label", { attrs: { for: "" } }, [_vm._v("Logo")]),
-      _vm._v(" "),
-      _c("input", { staticClass: "form-control", attrs: { type: "file" } })
-    ])
   }
 ]
 render._withStripped = true

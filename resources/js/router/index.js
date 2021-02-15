@@ -19,8 +19,7 @@ let frontend_routes = [
     name: 'welcome',
     meta: {
       layout: "frontend",
-      public: true,
-      onlylogout: true
+      requireAuth: false
     },
     component: Welcome
   },
@@ -29,24 +28,12 @@ let frontend_routes = [
     name: 'login',
     meta: {
       layout: "frontend",
-      public: true,
-      onlylogout: true
+      requireAuth: false
     },
     component: () =>
       import( /* webpackChunkName: "about" */ '../views/pages/frontend/Login.vue')
   },
-  // {
-  //   path: '/forgot',
-  //   name: 'forgot',
-  //   meta: {
-  //     layout: "frontend",
-  //     public: true,
-  //     onlylogout: true
-  //   },
-  //   component: () =>
-  //     import( /* webpackChunkName: "about" */ '../views/frontend/Forgot.vue')
-  // },
-  {
+   {
     path: '/',
     redirect: {
       name: 'welcome'
@@ -57,8 +44,7 @@ let frontend_routes = [
     name: 'page404',
     meta: {
       layout: "frontend",
-      public: true,
-      onlylogout: true,
+      requireAuth: false
       // middleware: [ auth]
     },
     component: () =>
@@ -90,28 +76,38 @@ router.afterEach((to, from) => {
   // NProgress.done();
   EventBus.$emit("loading", false)
 });
+
 router.beforeEach((to, from, next) => {
-  const isPublic = to.matched.some(record => record.meta.public)
-  const onlyWhenLoggedOut = to.matched.some(record => record.meta.onlylogout)
-  const role = store.state.authmodule.user.role;
-  let loggedIn = !!TokenService.getToken();
-  if (!isPublic && !loggedIn && to.path !== '/login') {
-      return next({
-          path: '/login',
-          // query: {
-          //     redirect: to.fullPath
-          // } // Store the full path to redirect the user to after login
-      });
-
-  }
-  if (loggedIn && onlyWhenLoggedOut) {
-      if(role != 'Admin'){
-          return next('/home')
-      }
-      return next('/dashboard')
-
-  }
-  next();
-});
+    const requiredAuth = to.meta.requireAuth
+    const isAdmin = to.meta.is_admin
+    const role = store.state.authmodule.user.role;
+    let loggedIn = !!TokenService.getToken();
+    if (requiredAuth) {
+        if (!loggedIn) {
+            next({
+                name: 'login'
+            })
+        } else {
+          switch (role) {
+            case 'Admin':
+                next('/dashboard')
+              break;
+            case 'Company':
+             next('/home')
+             break;
+            case 'Employee':
+             next('/profile')
+             break;
+          
+            default:
+              next()
+              break;
+          }
+        }
+        
+    }else{
+      next()
+    }
+})
 
 export default router

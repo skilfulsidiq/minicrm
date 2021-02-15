@@ -57,7 +57,7 @@ const actions = {
           ApiService.setHeader();
            commit("loginSuccess", res);
            commit("UPDATED_USER_DATA", response.user);
-           router.push(router.history.current.query.redirect || response.user.role.role=="Admin"?"/dashboard":"/home");
+           router.push(router.history.current.query.redirect || TokenService.redirectUser(response.user.role.role));
            return true;
        })
 
@@ -93,7 +93,7 @@ const actions = {
     	TokenService.removeRefreshToken()
     	ApiService.removeHeader()
     commit("logoutSuccess");
-    router.push({name:'login'});
+    router.push({name:'welcome'});
 }
 }
 const getters = {}

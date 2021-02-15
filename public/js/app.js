@@ -2661,7 +2661,9 @@ var backend_routes = [{
   path: "/home",
   name: "home",
   meta: {
-    layout: "backend"
+    layout: "backend",
+    requireAuth: true,
+    is_admin: false
   },
   component: function component() {
     return __webpack_require__.e(/*! import() */ "resources_js_views_pages_backend_Home_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../views/pages/backend/Home.vue */ "./resources/js/views/pages/backend/Home.vue"));
@@ -2670,7 +2672,9 @@ var backend_routes = [{
   path: "/profile",
   name: "profile",
   meta: {
-    layout: "backend"
+    layout: "backend",
+    requireAuth: true,
+    is_admin: false
   },
   component: function component() {
     return __webpack_require__.e(/*! import() */ "resources_js_views_pages_backend_Profile_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../views/pages/backend/Profile.vue */ "./resources/js/views/pages/backend/Profile.vue"));
@@ -2679,7 +2683,9 @@ var backend_routes = [{
   path: "/dashboard",
   name: "dashboard",
   meta: {
-    layout: "admin"
+    layout: "admin",
+    requireAuth: true,
+    is_admin: true
   },
   component: function component() {
     return __webpack_require__.e(/*! import() */ "resources_js_views_pages_admin_Dashboard_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../views/pages/admin/Dashboard.vue */ "./resources/js/views/pages/admin/Dashboard.vue"));
@@ -2688,7 +2694,9 @@ var backend_routes = [{
   path: "/companies",
   name: "companies",
   meta: {
-    layout: "admin"
+    layout: "admin",
+    requireAuth: true,
+    is_admin: true
   },
   component: function component() {
     return __webpack_require__.e(/*! import() */ "resources_js_views_pages_admin_Company_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../views/pages/admin/Company.vue */ "./resources/js/views/pages/admin/Company.vue"));
@@ -2697,60 +2705,14 @@ var backend_routes = [{
   path: "/employees",
   name: "employees",
   meta: {
-    layout: "admin"
+    layout: "admin",
+    requireAuth: true,
+    is_admin: true
   },
   component: function component() {
     return __webpack_require__.e(/*! import() */ "resources_js_views_pages_admin_Employee_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../views/pages/admin/Employee.vue */ "./resources/js/views/pages/admin/Employee.vue"));
   }
-} // {
-//   path: "/all-properties",
-//   name: "all-properties",
-//   meta: {
-//     layout: "backend"
-//   },
-//   component: () =>import( "../views/backend/properties/AllProperties.vue")
-// },
-// {
-//   path: "/add-property",
-//   name: "add-property",
-//   meta: {
-//     layout: "backend"
-//   },
-//   component: () =>import("../views/backend/properties/NewProperty.vue")
-// },
-// {
-//   path: "/all-contractors",
-//   name: "all-contractors",
-//   meta: {
-//     layout: "backend"
-//   },
-//   component: () =>import("../views/backend/contrators/Contrator.vue")
-// },
-// {
-//   path: "/all-buyers",
-//   name: "all-buyers",
-//   meta: {
-//     layout: "backend"
-//   },
-//   component: () =>import("../views/backend/buyer/Buyer.vue")
-// },
-// {
-//   path: "/profile",
-//   name: "profile",
-//   meta: {
-//     layout: "backend"
-//   },
-//   component: Profile
-// },
-// {
-//   path: "/staff",
-//   name: "staff",
-//   meta: {
-//     layout: "backend"
-//   },
-//   component: Staff
-// }
-];
+}];
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (backend_routes);
 
 /***/ }),
@@ -2787,8 +2749,7 @@ var frontend_routes = [{
   name: 'welcome',
   meta: {
     layout: "frontend",
-    "public": true,
-    onlylogout: true
+    requireAuth: false
   },
   component: _views_pages_frontend_Welcome__WEBPACK_IMPORTED_MODULE_4__.default
 }, {
@@ -2796,24 +2757,12 @@ var frontend_routes = [{
   name: 'login',
   meta: {
     layout: "frontend",
-    "public": true,
-    onlylogout: true
+    requireAuth: false
   },
   component: function component() {
     return __webpack_require__.e(/*! import() | about */ "about").then(__webpack_require__.bind(__webpack_require__, /*! ../views/pages/frontend/Login.vue */ "./resources/js/views/pages/frontend/Login.vue"));
   }
-}, // {
-//   path: '/forgot',
-//   name: 'forgot',
-//   meta: {
-//     layout: "frontend",
-//     public: true,
-//     onlylogout: true
-//   },
-//   component: () =>
-//     import( /* webpackChunkName: "about" */ '../views/frontend/Forgot.vue')
-// },
-{
+}, {
   path: '/',
   redirect: {
     name: 'welcome'
@@ -2823,8 +2772,7 @@ var frontend_routes = [{
   name: 'page404',
   meta: {
     layout: "frontend",
-    "public": true,
-    onlylogout: true // middleware: [ auth]
+    requireAuth: false // middleware: [ auth]
 
   },
   component: function component() {
@@ -2855,33 +2803,38 @@ router.afterEach(function (to, from) {
   _services_event__WEBPACK_IMPORTED_MODULE_1__.default.$emit("loading", false);
 });
 router.beforeEach(function (to, from, next) {
-  var isPublic = to.matched.some(function (record) {
-    return record.meta["public"];
-  });
-  var onlyWhenLoggedOut = to.matched.some(function (record) {
-    return record.meta.onlylogout;
-  });
+  var requiredAuth = to.meta.requireAuth;
+  var isAdmin = to.meta.is_admin;
   var role = _store__WEBPACK_IMPORTED_MODULE_2__.default.state.authmodule.user.role;
   var loggedIn = !!_services_TokenService__WEBPACK_IMPORTED_MODULE_0__.TokenService.getToken();
 
-  if (!isPublic && !loggedIn && to.path !== '/login') {
-    return next({
-      path: '/login' // query: {
-      //     redirect: to.fullPath
-      // } // Store the full path to redirect the user to after login
+  if (requiredAuth) {
+    if (!loggedIn) {
+      next({
+        name: 'login'
+      });
+    } else {
+      switch (role) {
+        case 'Admin':
+          next('/dashboard');
+          break;
 
-    });
-  }
+        case 'Company':
+          next('/home');
+          break;
 
-  if (loggedIn && onlyWhenLoggedOut) {
-    if (role != 'Admin') {
-      return next('/home');
+        case 'Employee':
+          next('/profile');
+          break;
+
+        default:
+          next();
+          break;
+      }
     }
-
-    return next('/dashboard');
+  } else {
+    next();
   }
-
-  next();
 });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (router);
 
@@ -3448,6 +3401,18 @@ var TokenService = {
   },
   removeUser: function removeUser() {
     localStorage.removeItem(AUTH_USER);
+  },
+  redirectUser: function redirectUser(role) {
+    switch (role) {
+      case 'Admin':
+        return '/dashboard';
+
+      case 'Company':
+        return '/home';
+
+      case 'Employee':
+        return '/profile';
+    }
   }
 };
 
@@ -3859,7 +3824,7 @@ var actions = {
                 _services_ApiService__WEBPACK_IMPORTED_MODULE_4__.default.setHeader();
                 commit("loginSuccess", res);
                 commit("UPDATED_USER_DATA", response.user);
-                _router_index__WEBPACK_IMPORTED_MODULE_3__.default.push(_router_index__WEBPACK_IMPORTED_MODULE_3__.default.history.current.query.redirect || response.user.role.role == "Admin" ? "/dashboard" : "/home");
+                _router_index__WEBPACK_IMPORTED_MODULE_3__.default.push(_router_index__WEBPACK_IMPORTED_MODULE_3__.default.history.current.query.redirect || _services_TokenService__WEBPACK_IMPORTED_MODULE_1__.TokenService.redirectUser(response.user.role.role));
                 return true;
               });
 
@@ -3945,7 +3910,7 @@ var actions = {
     _services_ApiService__WEBPACK_IMPORTED_MODULE_4__.default.removeHeader();
     commit("logoutSuccess");
     _router_index__WEBPACK_IMPORTED_MODULE_3__.default.push({
-      name: 'login'
+      name: 'welcome'
     });
   }
 };

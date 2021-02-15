@@ -49,7 +49,18 @@ const TokenService = {
     },
     removeUser(){
         localStorage.removeItem(AUTH_USER)
-    }
+    },
+	redirectUser(role){
+		switch(role){
+			case 'Admin':
+				return '/dashboard';
+			case 'Company':
+				return '/home';
+			case 'Employee':
+				return '/profile'
+
+		}
+	}
 }
 
 export {
