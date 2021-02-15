@@ -1,6 +1,7 @@
 // import Router from 'vue-router'
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import NProgress from "nprogress";
 import {
   TokenService
 } from '../services/TokenService'
@@ -66,14 +67,14 @@ const router = new VueRouter({
 
 router.beforeResolve((to, from, next) => {
   if (to.name) {
-    // NProgress.start();
+    NProgress.start();
     EventBus.$emit("loading", true)
   }
   next();
 });
 
 router.afterEach((to, from) => {
-  // NProgress.done();
+  NProgress.done();
   EventBus.$emit("loading", false)
 });
 
@@ -87,18 +88,17 @@ router.beforeEach((to, from, next) => {
             next({
                 name: 'login'
             })
-        } else {
+        } else{
           switch (role) {
             case 'Admin':
-                next('/dashboard')
+                next()
               break;
             case 'Company':
-             next('/home')
-             break;
+                next('/home')
+                break;
             case 'Employee':
-             next('/profile')
-             break;
-          
+              next('/profile')
+              break;
             default:
               next()
               break;

@@ -8,6 +8,7 @@ import router from "./router";
 import ApiService from './services/ApiService';
 import { TokenService } from './services/TokenService';
 import store from "./store";
+// import 'nprogress/nprogress.css';
 
 // import vuetify from "./plugins/vuetify";
 ApiService.init('/api/');

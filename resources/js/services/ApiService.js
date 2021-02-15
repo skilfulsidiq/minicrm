@@ -14,12 +14,12 @@ axios.interceptors.request.use(config => {
 // before a response is returned stop nprogress
 axios.interceptors.response.use(
   function(response) {
-    // NProgress.done();
+    NProgress.done();
     EventBus.$emit("loading", false);
     return response;
   },
   function(error) {
-    // NProgress.done();
+    NProgress.done();
     EventBus.$emit("loading", false);
     // check for errorHandle config
     if (error.config.hasOwnProperty("errorHandle") && error.config.errorHandle === false) {

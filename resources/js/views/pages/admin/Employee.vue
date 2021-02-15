@@ -127,10 +127,11 @@
 </template>
 <script>
 import {paginationMixin} from '../../../mixins/paginationMixin'
+import {loadingMixin} from '../../../mixins/Loading'
 import { required, minLength, email } from 'vuelidate/lib/validators'
 export default {
     name:"Employee",
-    mixins:[paginationMixin],
+    mixins:[paginationMixin,loadingMixin],
     data(){
         return{
             title:"Employees",

@@ -11,6 +11,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _mixins_Loading__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../mixins/Loading */ "./resources/js/mixins/Loading.js");
 //
 //
 //
@@ -51,8 +52,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Dashboard",
+  mixins: [_mixins_Loading__WEBPACK_IMPORTED_MODULE_0__.loadingMixin],
   computed: {
     info: function info() {
       var p = this.$store.state.dashboard_module.dashboard;

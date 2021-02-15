@@ -39,8 +39,10 @@
     </div>
 </template>
 <script>
+import {loadingMixin} from '../../../mixins/Loading'
 export default {
     name:"Dashboard",
+    mixins:[loadingMixin],
     computed:{
         info(){
           let p = this.$store.state.dashboard_module.dashboard;
