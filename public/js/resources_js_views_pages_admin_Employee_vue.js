@@ -153,10 +153,12 @@ __webpack_require__.r(__webpack_exports__);
         role_id: '',
         name: '',
         email: '',
-        password: ''
+        password: '',
+        slug: ''
       },
       submitted: false,
-      editForm: false
+      editForm: false,
+      slug: ''
     };
   },
   validations: {
@@ -216,10 +218,15 @@ __webpack_require__.r(__webpack_exports__);
       this.resetForm();
       this.mapDataToForm(user);
       this.editForm = true;
+      this.slug = user.slug;
       $("#newModal").modal('show');
     },
     resetForm: function resetForm() {
-      this.form = {};
+      this.form.company_id = '';
+      this.form.role_id = '';
+      this.form.name = '';
+      this.form.email = '';
+      this.slug = '';
     },
     addEmployee: function addEmployee() {
       var _this = this;
@@ -232,12 +239,40 @@ __webpack_require__.r(__webpack_exports__);
         return;
       }
 
-      this.$store.dispatch("addEmployeeAction", this.form).then(function (res) {
+      var fm = {
+        form: this.form,
+        slug: this.slug
+      };
+      this.$store.dispatch("addEmployeeAction", fm).then(function (res) {
         _this.closeModal();
 
         _this.resetForm();
 
+        _this.fetchInfo();
+
         _this.submitted = false;
+      });
+    },
+    deleteEmployee: function deleteEmployee(user) {
+      var _this2 = this;
+
+      this.$swal({
+        title: 'Are You sure ?',
+        text: 'You won\'t be able to revert this',
+        icon: "warning",
+        buttons: true
+      }).then(function (willDelete) {
+        if (willDelete) {
+          _this2.$store.dispatch("deleteEmployeeAction", user.slug).then(function (res) {
+            _this2.fetchInfo();
+
+            swal("Employee Deleted Successfully", {
+              icon: "success"
+            });
+          });
+        } else {
+          swal("Deletion is Cancelled");
+        }
       });
     }
   },
@@ -382,7 +417,7 @@ var render = function() {
                       _vm._v(" "),
                       _c("td", [
                         _c(
-                          "button",
+                          "a",
                           {
                             staticClass: "text-success btn-text",
                             on: {
@@ -396,7 +431,19 @@ var render = function() {
                         _vm._v(
                           "\n                         \n                        "
                         ),
-                        _vm._m(1, true)
+                        _c(
+                          "a",
+                          {
+                            staticClass: " text-danger",
+                            attrs: { href: "#" },
+                            on: {
+                              click: function($event) {
+                                return _vm.deleteEmployee(user)
+                              }
+                            }
+                          },
+                          [_c("i", { staticClass: "fa fa-trash" })]
+                        )
                       ])
                     ])
                   }),
@@ -462,7 +509,7 @@ var render = function() {
                     ]
                   ),
                   _vm._v(" "),
-                  _vm._m(2)
+                  _vm._m(1)
                 ]),
                 _vm._v(" "),
                 _c(
@@ -703,18 +750,14 @@ var render = function() {
                             {
                               name: "model",
                               rawName: "v-model.trim",
-                              value: _vm.form.email,
-                              expression: "form.email",
+                              value: _vm.form.password,
+                              expression: "form.password",
                               modifiers: { trim: true }
                             }
                           ],
                           staticClass: "form-control",
-                          class: {
-                            "is-invalid":
-                              _vm.submitted && _vm.$v.form.password.$error
-                          },
-                          attrs: { type: "text", id: "email", autofocus: "" },
-                          domProps: { value: _vm.form.email },
+                          attrs: { type: "text", id: "email" },
+                          domProps: { value: _vm.form.password },
                           on: {
                             input: function($event) {
                               if ($event.target.composing) {
@@ -722,7 +765,7 @@ var render = function() {
                               }
                               _vm.$set(
                                 _vm.form,
-                                "email",
+                                "password",
                                 $event.target.value.trim()
                               )
                             },
@@ -786,22 +829,6 @@ var staticRenderFns = [
         ])
       ])
     ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "a",
-      {
-        staticClass: " text-danger",
-        attrs: {
-          onclick: "return confirm('are you sure to delete');",
-          href: "#"
-        }
-      },
-      [_c("i", { staticClass: "fa fa-trash" })]
-    )
   },
   function() {
     var _vm = this

@@ -4037,6 +4037,7 @@ var actions = {
     var commit = _ref6.commit;
     var form = formdata.form;
     var slug = formdata.slug;
+    console.log(formdata);
     return new Promise(function (resolve, reject) {
       api.addEmployee(form, slug).then(function (res) {
         var p = res.data.data;
@@ -4049,7 +4050,7 @@ var actions = {
   deleteEmployeeAction: function deleteEmployeeAction(_ref7, slug) {
     var commit = _ref7.commit;
     return new Promise(function (resolve, reject) {
-      api.deleteCompany(slug).then(function (res) {
+      api.deleteEmployee(slug).then(function (res) {
         var p = res.data.data;
         resolve(res); // commit("ALL_EMPLOYEES", p);
       });

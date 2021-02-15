@@ -33,10 +33,10 @@
                         <td>{{user.role.role}} User</td>
 
                         <td>
-                            <button  @click="editModal(user)"  class="text-success btn-text"> <i class="fa fa-edit text-20"></i>
-                            </button>
+                            <a  @click="editModal(user)"  class="text-success btn-text"> <i class="fa fa-edit text-20"></i>
+                            </a>
                             &nbsp;
-                            <a onclick="return confirm('are you sure to delete');"  href="#" class=" text-danger"> <i class="fa fa-trash"></i></a>
+                            <a @click="deleteEmployee(user)" href="#" class=" text-danger"> <i class="fa fa-trash"></i></a>
                         </td>
 
                         </tr>
@@ -106,7 +106,7 @@
                           </div>
                            <div class="form-group">
                              <label for="">Password</label>
-                              <input class="form-control" :class="{ 'is-invalid': submitted && $v.form.password.$error }" type="text" id="email" v-model.trim="form.email"  autofocus>
+                              <input class="form-control"  type="text" id="email" v-model.trim="form.password" >
                                 <!-- <div v-if="submitted && $v.form.email.$error" class="invalid-feedback">
                                   <span v-if="!$v.form.password.required">Password is required</span>
                                   <span v-if="!$v.form.password.minLength">Password must be at least 6 characters</span>
@@ -139,10 +139,12 @@ export default {
               role_id:'',
               name:'',
               email:'',
-              password:''
+              password:'',
+              slug:''
             },
             submitted:false,
-            editForm:false
+            editForm:false,
+            slug:''
         }
     },
     validations:{
@@ -197,26 +199,52 @@ export default {
           this.resetForm();
           this.mapDataToForm(user);
           this.editForm=true;
+          this.slug = user.slug
         
            $("#newModal").modal('show');
         },
         resetForm(){
-          this.form={}
+          this.form.company_id = ''
+          this.form.role_id = ''
+          this.form.name = ''
+          this.form.email = ''
+          this.slug=''
         },
         addEmployee(){
            this.submitted = true;
-
                 // stop here if form is invalid
                 this.$v.$touch();
                 if (this.$v.$invalid) {
                     return;
                 }
-
-              this.$store.dispatch("addEmployeeAction",this.form).then((res)=>{
+                let fm = {form:this.form,slug:this.slug}
+              this.$store.dispatch("addEmployeeAction",fm).then((res)=>{
                   this.closeModal();
                   this.resetForm();
+                  this.fetchInfo();
                   this.submitted = false;
               });
+        },
+        deleteEmployee(user){
+            this.$swal({
+              title:'Are You sure ?',
+              text:'You won\'t be able to revert this',
+              icon: "warning",
+              buttons: true,
+
+            }).then((willDelete) => {
+              if (willDelete) {
+                this.$store.dispatch("deleteEmployeeAction",user.slug).then((res)=>{
+                    this.fetchInfo();
+                      swal("Employee Deleted Successfully", {
+                        icon: "success",
+                      });
+                })
+              
+              } else {
+                swal("Deletion is Cancelled");
+              }
+            })
         }
     },
     created(){
