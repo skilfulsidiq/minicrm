@@ -3242,7 +3242,7 @@ var ApiSource = /*#__PURE__*/function () {
           while (1) {
             switch (_context11.prev = _context11.next) {
               case 0:
-                return _context11.abrupt("return", this.sendrequest("get", "company_employee/" + id));
+                return _context11.abrupt("return", this.sendrequest("get", "company-employee/" + id));
 
               case 1:
               case "end":

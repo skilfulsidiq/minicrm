@@ -35,7 +35,7 @@
                                             </td>
 
                                             <td>
-                                                <a @click="editModal(item)"  class="action-icon action-btn text-success"> <i class="fa fa-edit text-20"></i>
+                                                <a @click="editModal(item)" href="#"  class="action-icon action-btn text-success"> <i class="fa fa-edit text-20"></i>
                                                 </a>
                                                 &nbsp;
                                                 <a @click="deleteCompany(item)"  href="#" class="action-icon action-btn text-danger"> <i class="fa fa-trash"></i></a>
@@ -131,6 +131,7 @@ export default {
             },
             submitted:false,
             editForm:false,
+            slug:''
         }
     },
         validations:{
@@ -162,18 +163,24 @@ export default {
             $("#newModal").modal('hide');
              
         },
-        editModal(user){
+        mapDataToForm(company){
+          this.form.name = company.name,
+          this.form.email = company.email
+          this.form.url = company.url
+          this.form.image = company.image
+        },
+        editModal(company){
           this.resetForm();
-          this.mapDataToForm(user);
+          this.mapDataToForm(company);
           this.editForm=true;
+          this.slug = company.slug
         
            $("#newModal").modal('show');
         },
         resetForm(){
-          this.form.company_id = ''
-          this.form.role_id = ''
-          this.form.name = ''
+          this.form.name= ''
           this.form.email = ''
+          this.form.url = ''
         },
         addCompany(){
                 this.submitted = true;
@@ -183,25 +190,14 @@ export default {
                 if (this.$v.$invalid) {
                     return;
                 }
-
-              this.$store.dispatch("addCompanyAction",this.form).then((res)=>{
+                let fm = {form:this.form,slug:this.slug}
+              this.$store.dispatch("addCompanyAction",fm).then((res)=>{
                   this.closeModal();
                   this.resetForm();
-                  this.submitted = false;
-              });
-        },
-        updateComPany(){
-                   this.submitted = true;
-
-                // stop here if form is invalid
-                this.$v.$touch();
-                if (this.$v.$invalid) {
-                    return;
-                }
-
-              this.$store.dispatch("addCompanyAction",this.form).then((res)=>{
-                  this.closeModal();
-                  this.resetForm();
+                  this.fetchInfo();
+                  swal("Company updated Successfully", {
+                        icon: "success",
+                      });
                   this.submitted = false;
               });
         },
@@ -214,7 +210,8 @@ export default {
 
             }).then((willDelete) => {
               if (willDelete) {
-                this.$store.dispatch("deleteEmployeeAction",company.slug).then((res)=>{
+                this.$store.dispatch("deleteCompanyAction",company.slug).then((res)=>{
+                  this.fetchInfo();
                       swal("Company Deleted Successfully", {
                         icon: "success",
                       });

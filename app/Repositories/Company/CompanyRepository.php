@@ -44,7 +44,7 @@ use Uploadable;
      */
     public function deleteCompany($slug){
          $company = Company::where('slug', $slug)->first();
-        if(!$company->delete()){
+        if($company->delete()){
             return $this->success('Company deleted successfully', $company);
         }
         return $this->fail('Error deleting company','DeleteCompany');

@@ -250,6 +250,9 @@ __webpack_require__.r(__webpack_exports__);
 
         _this.fetchInfo();
 
+        swal("Employee updated Successfully", {
+          icon: "success"
+        });
         _this.submitted = false;
       });
     },

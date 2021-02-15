@@ -31,7 +31,7 @@ Route::group(['namespace'=>'Api'],function(){
 });
 Route::group(['namespace'=>'Api\User','middleware'=>['auth:sanctum']],function(){
 
-    Route::get('/company_employee/{company_id}','UserController@allCompanyEmployees');
+    Route::get('/company-employee/{company_id}','UserController@allCompanyEmployees');
     Route::post('/update-profile/{slug}','UserController@updateProfile');
     
 });

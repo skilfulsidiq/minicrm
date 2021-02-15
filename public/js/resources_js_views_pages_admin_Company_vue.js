@@ -144,7 +144,8 @@ __webpack_require__.r(__webpack_exports__);
         image: ''
       },
       submitted: false,
-      editForm: false
+      editForm: false,
+      slug: ''
     };
   },
   validations: {
@@ -179,17 +180,22 @@ __webpack_require__.r(__webpack_exports__);
       this.resetForm();
       $("#newModal").modal('hide');
     },
-    editModal: function editModal(user) {
+    mapDataToForm: function mapDataToForm(company) {
+      this.form.name = company.name, this.form.email = company.email;
+      this.form.url = company.url;
+      this.form.image = company.image;
+    },
+    editModal: function editModal(company) {
       this.resetForm();
-      this.mapDataToForm(user);
+      this.mapDataToForm(company);
       this.editForm = true;
+      this.slug = company.slug;
       $("#newModal").modal('show');
     },
     resetForm: function resetForm() {
-      this.form.company_id = '';
-      this.form.role_id = '';
       this.form.name = '';
       this.form.email = '';
+      this.form.url = '';
     },
     addCompany: function addCompany() {
       var _this = this;
@@ -202,35 +208,25 @@ __webpack_require__.r(__webpack_exports__);
         return;
       }
 
-      this.$store.dispatch("addCompanyAction", this.form).then(function (res) {
+      var fm = {
+        form: this.form,
+        slug: this.slug
+      };
+      this.$store.dispatch("addCompanyAction", fm).then(function (res) {
         _this.closeModal();
 
         _this.resetForm();
 
+        _this.fetchInfo();
+
+        swal("Company updated Successfully", {
+          icon: "success"
+        });
         _this.submitted = false;
       });
     },
-    updateComPany: function updateComPany() {
-      var _this2 = this;
-
-      this.submitted = true; // stop here if form is invalid
-
-      this.$v.$touch();
-
-      if (this.$v.$invalid) {
-        return;
-      }
-
-      this.$store.dispatch("addCompanyAction", this.form).then(function (res) {
-        _this2.closeModal();
-
-        _this2.resetForm();
-
-        _this2.submitted = false;
-      });
-    },
     deleteCompany: function deleteCompany(company) {
-      var _this3 = this;
+      var _this2 = this;
 
       this.$swal({
         title: 'Are You sure ?',
@@ -239,7 +235,9 @@ __webpack_require__.r(__webpack_exports__);
         buttons: true
       }).then(function (willDelete) {
         if (willDelete) {
-          _this3.$store.dispatch("deleteEmployeeAction", company.slug).then(function (res) {
+          _this2.$store.dispatch("deleteCompanyAction", company.slug).then(function (res) {
+            _this2.fetchInfo();
+
             swal("Company Deleted Successfully", {
               icon: "success"
             });
@@ -400,6 +398,7 @@ var render = function() {
                             {
                               staticClass:
                                 "action-icon action-btn text-success",
+                              attrs: { href: "#" },
                               on: {
                                 click: function($event) {
                                   return _vm.editModal(item)

@@ -222,6 +222,9 @@ export default {
                   this.closeModal();
                   this.resetForm();
                   this.fetchInfo();
+                  swal("Employee updated Successfully", {
+                        icon: "success",
+                      });
                   this.submitted = false;
               });
         },

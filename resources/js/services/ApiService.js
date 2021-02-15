@@ -83,7 +83,7 @@ export class ApiSource {
     return this.sendrequest("get", "admin/delete-company/"+slug);
   }
   async companyEmployee(id) {
-    return this.sendrequest("get", "company_employee/" + id);
+    return this.sendrequest("get", "company-employee/" + id);
   }
    async employeeList() {
        return this.sendrequest("get", "admin/all-employees");
